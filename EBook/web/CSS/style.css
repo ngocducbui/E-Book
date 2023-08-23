@@ -1,3 +1,20 @@
 h1{
     color:red;
 }
+.bg-custom{
+    background-color: #303f9f
+}
+.navbar .nav-item:hover .nav-link{
+    background-color: white;
+    color:blue;
+}
+.back-img{
+    background: url("../img/Book.jpg");
+    height: 50vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.crd-ho:hover{
+    background-color: #fcf7f7
+}
