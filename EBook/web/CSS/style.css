@@ -18,3 +18,21 @@ h1{
 .crd-ho:hover{
     background-color: #fcf7f7
 }
+.content {
+    position: relative; /* Đảm bảo phần tử overlay nằm trong phạm vi của div */
+    display: inline-block; /* Đảm bảo các phần tử sát cạnh nhau */
+}
+
+.overlay {
+    position: absolute; /* Đặt overlay trên div */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu đen với độ mờ 50% */
+    z-index: 1; /* Đặt overlay lên trên div */
+}
+
+.name {
+    z-index: 2; /* Đặt nội dung lên trên overlay */
+}

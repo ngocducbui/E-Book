@@ -24,10 +24,11 @@
 
         <%@include file= "View/navbar.jsp"%>
 
-        <div class="container-fluid back-img">
-            <h2 class="text-center text-danger"> EBook Management System</h2>
-        </div>
+        <div class="container-fluid back-img content justify-content-center">
+            <h2 class="text-center text-danger" style="z-index: 100">  EBook Management System</h2>
 
+            <div class="overlay"></div>
+        </div>
 
         <!--        Recent book-->
         <div class="container" >

@@ -10,7 +10,7 @@
             <h3> <i class="fa-solid fa-book" style=" margin-right: 2%"></i>Ebooks</h3>
         </div>
         <div class="col-md-6">
-            <form class="d-flex" role="search" style="max-width: 80%; margin:auto">
+            <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>     
@@ -31,24 +31,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="<%=url%>/index.jsp">Home</a>
+                    <a class="nav-link active" href="#">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#"> <i class="fa-solid fa-book-open " style="margin-right: 0.3rem" ></i>Recent Book</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#"> <i class="fa-solid fa-book-open" style="margin-right: 0.3rem"></i>New Book</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="fas fa-book-open" style="margin-right: 0.3rem"></i>Old Book</a>
-                </li>
-
-            </ul>
-            <form class="d-flex">
-                <button class="btn btn-light" style="margin-right: 0.5rem" type="submit"><i class="fa-solid fa-gear" style="margin-right: 0.3rem"></i>Setting</button>
-                <button class="btn btn-light" type="submit"><i class="fa-solid fa-phone" style="margin-right: 0.3rem"></i>Contact Us</button>
-
-            </form>
+               
         </div>
     </div>
 </nav>
