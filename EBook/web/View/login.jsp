@@ -29,13 +29,11 @@
                     <div class="card">
                         <div class="card-body ">
                             <h4 class="text-center">Login Page</h4>
-
                             <c:if test="${not empty failedMsg}">
                                 <p class="text-center text-danger">${failedMsg}</p>
                                 <c:remove var="failedMsg" scope="session" />
 
                             </c:if>
-
                             <form action="/EBook/Login" method="post">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email address</label>

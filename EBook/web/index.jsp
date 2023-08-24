@@ -97,8 +97,8 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="text-center">
+               
+                <div class="text-center mt-4">
                     <a href="" class="btn btn-danger btn-sm">View All</a>
                 </div>
             </div>
@@ -173,7 +173,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="text-center">
+                <div class="text-center mt-4">
                     <a href="" class="btn btn-danger btn-sm">View All</a>
                 </div>
             </div>
@@ -249,7 +249,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="text-center">
+                <div class="text-center mt-4">
                     <a href="" class="btn btn-danger btn-sm">View All</a>
                 </div>
             </div>

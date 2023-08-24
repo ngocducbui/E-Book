@@ -36,3 +36,6 @@ h1{
 .name {
     z-index: 2; /* Đặt nội dung lên trên overlay */
 }
+.red-star{
+    color:red
+}
