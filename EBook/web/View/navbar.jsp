@@ -47,8 +47,8 @@
             <form class="d-flex">
                 <button class="btn btn-light" style="margin-right: 0.5rem" type="submit"><i class="fa-solid fa-gear" style="margin-right: 0.3rem"></i>Setting</button>
                 <button class="btn btn-light" type="submit"><i class="fa-solid fa-phone" style="margin-right: 0.3rem"></i>Contact Us</button>
-
             </form>
+                <a href="<%=url%>/duc.jsp">hiiiiiii</a>
         </div>
     </div>
 </nav>

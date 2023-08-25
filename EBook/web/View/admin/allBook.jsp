@@ -20,6 +20,28 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            function showInfoAndFillForm(row) {
+                var rowData = $(row).closest('tr').find('td').map(function () {
+                    return $(this).text();
+                }).get();
+
+                // Hiển thị danh sách dữ liệu trong console (để kiểm tra)
+                console.log(rowData);
+
+                // Điền dữ liệu từ rowData vào các trường của biểu mẫu
+                $('#exampleInputName').val(rowData[2]);
+                $('#exampleInputAuthor').val(rowData[3]);
+                $('#exampleInputPrice').val(rowData[4]);
+                $('#inputState').val(rowData[5]);
+                $('#inputStatus').val(rowData[6]);
+            }
+
+
+
+        </script>
     </head>
     <body style="background-color: #f0f2f2">
 
@@ -50,7 +72,7 @@
                     for (Book b : list_book) {
                 %>
                 <tr>
-                    <th scope="row"> <%=b.getBookId()%></th>
+                    <td scope="row"> <%=b.getBookId()%></td>
                     <td><img src="<%=url%>/book/<%=b.getPhotoName()%>" style="width: 50px;height: 50px"></td>
                     <td><%=b.getBookName()%></td>
                     <td><%=b.getAuthor()%></td>
@@ -58,13 +80,14 @@
                     <td><%=b.getBookCategory()%></td>
                     <td><%=b.getStatus()%></td>
                     <td>
-                        <a value="hi" id="edit" href="#" class="btn btn-sm btn-primary">Edit</a>
+                        <a  href="#" class="btn btn-sm btn-primary edit" onclick="showInfoAndFillForm(this);"> Edit </a>
                         <a id="close" href="#" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
                 <%
                     }
                 %>
+
             </tbody>
         </table>
 
@@ -175,12 +198,42 @@
 
         <!--            ///////////-->
 
+        <script>
+            const overlay = document.getElementById('overlay');
+            document.addEventListener('click', function (event)
 
 
+            {
+                if (event.target.classList.contains('edit')) {
+                    event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+                    // Xử lý sự kiện click cho thẻ <a> có class "edit" ở đây
+                    document.querySelector(".popup2").classList.add("active");
+                    overlay.style.display = 'block';
+                    popup = document.querySelector(".popup2");
+                    popup.style.zIndex = "1001";
+                    // Thực hiện các hành động cần thiết khi thẻ được click
+                }
+            }
+            );
+
+            overlay.addEventListener('click', () =>
+            {
+                overlay.style.display = 'none';
+                document.querySelector(".popup2").classList.remove("active");
+
+            });
+
+            document.querySelector(".popup2 .close-btn").addEventListener("click", function ()
 
 
+            {
+                document.querySelector(".popup2").classList.remove("active");
+                overlay.style.display = 'none';
 
-        <script src="../../JS/myjs.js" ></script>
+            });
+        </script>
+        <!--    <script src="../../JS/myjs.js" ></script>-->
 
     </body>
 </html>

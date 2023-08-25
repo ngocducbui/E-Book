@@ -90,11 +90,5 @@
             </div>
         </div>
 
-
-        <form id="myForm">
-            <button id="myButton" type="button" value="Click Me">Click Me</button>
-        </form>
-        <script src="../../JS/myjs.js" ></script>
-
     </body>
 </html>

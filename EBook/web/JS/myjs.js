@@ -44,3 +44,13 @@ myButton.addEventListener('click', () => {
     const dataToSend = `buttonValue=${encodeURIComponent(buttonValue)}`;
     xhr.send(dataToSend);
 });
+
+
+/////
+
+
+const myList = [1, 2, 3, 4, 5];
+const serializedList = myList.join(',');
+
+const url = 'http://localhost:8080/EBook/test.jsp?list=' + encodeURIComponent(serializedList);
+window.location.href = url;

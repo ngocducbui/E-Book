@@ -57,7 +57,7 @@ h1{
     top:-150%;
     left:50%;
     transform :translate(-50%,-50%) scale(1.25);
-    width: 380px;
+    width: 450px;
     padding:20px 30px;
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0,0,0,0,15);
