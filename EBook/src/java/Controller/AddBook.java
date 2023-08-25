@@ -78,7 +78,9 @@ public class AddBook extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        
+        
         try {
             String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
             //String url=getServletContext().getRealPath("");
@@ -101,7 +103,6 @@ public class AddBook extends HttpServlet {
             if (true) {
                 String path = getServletContext().getRealPath("") + "book";
                 String path_new = path.replace(String.valueOf("\\build"), "");
-
                 File file = new File(path);
                 part.write(path_new + File.separator + fileName);
                 session.setAttribute("successMsg", "Book Add Successfully.");

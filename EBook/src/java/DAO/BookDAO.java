@@ -5,6 +5,7 @@
 package DAO;
 
 import Model.Book;
+import java.util.List;
 
 /**
  *
@@ -12,4 +13,5 @@ import Model.Book;
  */
 public interface BookDAO {
     public boolean addBook(Book book);
+    public List<Book> getAllBook();
 }
