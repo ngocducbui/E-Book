@@ -1,5 +1,9 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
+
 <div class="container-fluid" style="height: 10px; background-color: #303f9f">
-    
+
 </div>
 
 
@@ -16,11 +20,51 @@
             </form>     
         </div>
         <div class="col-md-3 text-center">
-            <a href="<%=url%>/View/login.jsp" class="btn btn-success"><i class="fa-solid fa-right-to-bracket" style="margin-right: 0.3rem"></i>Login</a>
-            <a href="<%=url%>/View/register.jsp" class="btn btn-primary"><i class="fa-solid fa-user-plus" style="margin-right: 0.3rem"></i>Register</a>
+
+            <c:if test="${not empty userObj}">
+                <a href="" class="btn btn-success"><i class="fa-solid fa-user" style="margin-right: 0.3rem"></i>${userObj.name}</a>
+                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket" style="margin-right: 0.3rem"></i>Logout</a>
+
+            </c:if>
+            <c:if test="${empty userObj}"> 
+                <a href="<%=url%>/View/login.jsp" class="btn btn-success"><i class="fa-solid fa-right-to-bracket" style="margin-right: 0.3rem"></i>Login</a>
+
+                <a href="<%=url%>/View/register.jsp" class="btn btn-primary"><i class="fa-solid fa-user-plus" style="margin-right: 0.3rem"></i>Register</a>
+
+            </c:if>
+
+
+<!--            <a href="<%=url%>/View/login.jsp" class="btn btn-success"><i class="fa-solid fa-right-to-bracket" style="margin-right: 0.3rem"></i>Login</a>
+<a href="<%=url%>/View/register.jsp" class="btn btn-primary"><i class="fa-solid fa-user-plus" style="margin-right: 0.3rem"></i>Register</a>-->
         </div>
     </div>
 </div>
+
+
+<!--logout-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Logout</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h5>Are you sure you want to logout?</h5>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="/EBook/Logout" type="button" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--logout-->
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-custom ">
     <div class="container-fluid ">
@@ -48,7 +92,7 @@
                 <button class="btn btn-light" style="margin-right: 0.5rem" type="submit"><i class="fa-solid fa-gear" style="margin-right: 0.3rem"></i>Setting</button>
                 <button class="btn btn-light" type="submit"><i class="fa-solid fa-phone" style="margin-right: 0.3rem"></i>Contact Us</button>
             </form>
-                <a href="<%=url%>/duc.jsp">hiiiiiii</a>
+            <a href="<%=url%>/duc.jsp">hiiiiiii</a>
         </div>
     </div>
 </nav>

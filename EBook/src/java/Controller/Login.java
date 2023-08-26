@@ -88,7 +88,8 @@ public class Login extends HttpServlet {
 
             if ("admin@gmail.com".equals(email) && password.equals("admin")) {
                 User user = new User();
-                session.setAttribute("userObj", user);
+                user.setName("Admin");
+                session.setAttribute("adminObj", user);
                 url += "/View/admin/home.jsp";
                 response.sendRedirect(url);
             } else {

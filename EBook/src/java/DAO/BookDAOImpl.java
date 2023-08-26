@@ -99,4 +99,27 @@ public class BookDAOImpl implements BookDAO {
         return f;
     }
 
+    @Override
+    public boolean Delete(int id) {
+
+        boolean f = false;
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String sql = "DELETE FROM ebook.book\n"
+                    + "WHERE bookId=?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            int i = ps.executeUpdate();
+            if (i == 1) {
+                f = true;
+            }
+        } catch (Exception e) {
+        }
+        return f;
+
+    }
+
 }

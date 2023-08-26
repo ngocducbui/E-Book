@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package Controller;
 
+import DAO.BookDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -19,8 +21,8 @@ import org.json.JSONObject;
  *
  * @author ADMIN
  */
-@WebServlet(urlPatterns = {"/duc2"})
-public class duc2 extends HttpServlet {
+@WebServlet(name = "DeleteProduct", urlPatterns = {"/DeleteProduct"})
+public class DeleteProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class duc2 extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet duc2</title>");
+            out.println("<title>Servlet DeleteProduct</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet duc2 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteProduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,34 +77,43 @@ public class duc2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String productId = request.getParameter("productId");
-
-        // Thực hiện xóa dữ liệu sản phẩm dựa trên productId
-        // ... (viết mã xóa sản phẩm ở đây)
-        // Gửi phản hồi về client
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        JSONObject jsonResponse = new JSONObject();
         try {
-            jsonResponse.put("success", true); // Hoặc false nếu xóa không thành công
-        } catch (JSONException ex) {
-            Logger.getLogger(duc2.class.getName()).log(Level.SEVERE, null, ex);
+            boolean deleteSuccess = false;
+            String productId = request.getParameter("productId");
+            int id = Integer.parseInt(productId);
+            BookDAOImpl dao = new BookDAOImpl();
+            if (dao.Delete(id)) {
+                deleteSuccess = true;
+            }
+            // Thực hiện xóa dữ liệu sản phẩm dựa trên productId
+            // ... (viết mã xóa sản phẩm ở đây)
+            // Gửi phản hồi về client
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            JSONObject jsonResponse = new JSONObject();
+            try {
+                jsonResponse.put("success", deleteSuccess); // Hoặc false nếu xóa không thành công
+            } catch (JSONException ex) {
+                Logger.getLogger(DeleteProduct.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            PrintWriter out = response.getWriter();
+            out.print(jsonResponse.toString());
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        PrintWriter out = response.getWriter();
-        out.print(jsonResponse.toString());
-        out.flush();
+
     }
 
-
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

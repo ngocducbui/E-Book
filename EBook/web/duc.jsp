@@ -19,92 +19,74 @@
         <title>JSP Page</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            function sendRequestToServlet() {
-                return new Promise((resolve, reject) => {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "duc2", true);
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            $(document).ready(function () {
+                $(".delete-button").click(function () {
+                    var productDiv = $(this).closest(".product");
+                    var productName = productDiv.find(".product-name").text();
 
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
-                                var response = JSON.parse(xhr.responseText);
-                                resolve(response);
-                            } else {
-                                reject();
+                    if (confirm("Do you want to delete the product: " + productName + "?")) {
+                        var productId = $(this).data("product-id");
+
+                        $.ajax({
+                            type: "POST",
+                            url: "duc2",
+                            data: {productId: productId},
+                            success: function (response) {
+                                if (response.success) {
+                                    // Xóa sản phẩm khỏi giao diện
+                                    productDiv.remove();
+                                    alert("Delete successful");
+                                } else {
+                                    alert("Delete failed");
+                                }
+                            },
+                            error: function () {
+                                alert("An error occurred while communicating with the server.");
                             }
-                        }
-                    };
-
-                    xhr.send(); // Gửi yêu cầu
-                });
-            }
-
-// Trong sự kiện click của nút
-            document.getElementById("submitButton").addEventListener("click", function (event) {
-                event.preventDefault(); // Ngăn chặn hành vi mặc định của nút submit
-
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        sendRequestToServlet()
-                                .then(response => {
-                                    if (response.success) {
-                                        swal("Success! Your operation was successful.", {
-                                            icon: "success",
-                                        });
-                                    } else {
-                                        swal("Oops! Something went wrong.", {
-                                            icon: "error",
-                                        });
-                                    }
-                                })
-                                .catch(() => {
-                                    swal("An error occurred while communicating with the server.", {
-                                        icon: "error",
-                                    });
-                                });
-                    } else {
-                        swal("Your imaginary file is safe!");
+                        });
                     }
                 });
             });
-
         </script>
     </head>
     <body>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Action</th>
-            </tr>
-            <%
-                for (int i = 0; i < 5; i++) {
-            %>
-            <tr>
-                <td><%=i%></td>
-                <td><%=i%></td>
-                <td><button onclick="showInfoAndFillForm(this)">Show Info and Fill Form</button></td>
-            </tr>
-            <%
-                }
-            %>
+        <div class="product">
+            <span class="product-name">Product 1</span>
+            <span class="product-price">$100</span>
+            <button class="delete-button" data-product-id="1">Delete</button>
+        </div>
+        <div class="product">
+            <span class="product-name">Product 2</span>
+            <span class="product-price">$150</span>
+            <button class="delete-button" data-product-id="2">Delete</button>
+        </div>
 
-            <!-- Thêm các dòng khác tương tự -->
-        </table>
+        <!-- Nút để mở cửa sổ modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Open Modal
+        </button>
 
-        <!-- Biểu mẫu để điền dữ liệu -->
-        <form>
-            ID: <input type="text" id="idInput" name="id"><br>
-            Name: <input type="text" id="nameInput" name="name"><br>
-            <!-- Các trường khác tương tự -->
-        </form>
+        <!-- Cửa sổ modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do You Want To Logout?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -22,19 +22,20 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
             window.onload = function () {
                 // Kiểm tra xem có thuộc tính thành công hay không
+                var success = null;
                 var success = <%= request.getAttribute("success")%>;
 
                 if (success) {
                     // Hiển thị pop-up thông báo thành công
-                     swal("Poof! Your imaginary file has been deleted!", {
-                                        icon: "success",
-                                    });
+                    swal("Congratulations. You have successfully updated the book", {
+                        icon: "success",
+                    });
                 }
             };
             function showInfoAndFillForm(row) {
@@ -55,43 +56,87 @@
                 var currentUrl = window.location.href;
                 var fourthData = rowData[7];
                 var imageUrl = "../../book/" + fourthData;
-                // var imageContainer = document.getElementById('imageContainer');
-
-//                if (!imageContainer.querySelector('img')) {
-//
-//                    var imgElement = document.createElement('img');
-////                imgElement.onload = function () {
-////                    var width = 50px;
-////                    var height =50px;
-////
-////                };
-//                    imgElement.src = imageUrl;
-//                    imgElement.style.width = "50px";
-//                    imgElement.style.height = "50px";
-//                    var imageContainer = document.getElementById('imageContainer');
-//                    imageContainer.appendChild(imgElement);
-//
-//
-//
-//                    var resetButton = document.getElementById('resetButton');
-//                    resetButton.addEventListener('click', function () {
-//                        imgElement.src = ""; // Khôi phục lại hình ảnh ban đầu
-//
-//                    });
-//                }
                 var anh = document.getElementById('anh');
                 anh.src = imageUrl;
 
             }
 
+            $(document).ready(function () {
+                $(".delete-button").click(function () {
+                    var productDiv = $(this).closest(".product");
+                    var productName = productDiv.find(".product-name").text();
 
+                    swal({
+                        title: "Are you sure?",
+                        text: "Do you want to delete the book: " + productName + "?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            var productId = $(this).data("product-id");
+
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8080/EBook/DeleteProduct",
+                                data: {productId: productId},
+                                success: function (response) {
+                                    if (response.success) {
+                                        // Xóa sản phẩm khỏi giao diện
+                                        productDiv.remove();
+                                        var successMessage = swal("Delete Successful", {
+                                            icon: "success",
+                                        });
+                                        setTimeout(function () {
+                                            successMessage.close();
+                                        }, 2000);
+                                    } else {
+                                        swal("Delete failed. Please try again later!");
+                                    }
+                                },
+                                error: function () {
+                                    swal("An error occurred while communicating with the server.");
+                                }
+                            });
+                        } else {
+                            swal("The book not deleted.");
+                        }
+                    });
+                });
+            });
         </script>
     </head>
     <body style="background-color: #f0f2f2">
 
+
         <div class="overlay_all" id="overlay"></div>
 
         <%@include file= "navbar.jsp"%>
+
+
+
+        <c:if test="${empty adminObj}">
+            <c:if test="${empty userObj}">
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+                <script>
+            // $('#accessDeniedModal').modal('show');
+            window.location.href = '../login.jsp';
+            swal("Delete Successful", {
+                icon: "success",
+            });
+                </script>
+            </c:if>
+            <c:if test="${not empty userObj}">
+                <script>
+                    //   $('#permissionDeniedModal').modal('show');
+                    window.location.href = '<%=url%>/index.jsp';
+                </script>
+            </c:if>
+        </c:if>
+
+
+
         <h3 class="text-center mt-2">All Book</h3>
 
 
@@ -115,19 +160,19 @@
                     List<Book> list_book = dao.getAllBook();
                     for (Book b : list_book) {
                 %>
-                <tr>
+                <tr class="product">
                     <td scope="row"> <%=b.getBookId()%></td>
                     <td><img src="<%=url%>/book/<%=b.getPhotoName()%>" style="width: 50px;height: 50px"></td>
-                    <td><%=b.getBookName()%></td>
+                    <td class="product-name"><%=b.getBookName()%></td>
                     <td><%=b.getAuthor()%></td>
-                    <td><%=b.getPrice()%></td>
+                    <td class="product-price"><%=b.getPrice()%></td>
                     <td><%=b.getBookCategory()%></td>
                     <td><%=b.getStatus()%></td>
                     <td style="display: none;"><%=b.getPhotoName()%></td>
 
                     <td>
-                        <a  href="#" class="btn btn-sm btn-primary edit" onclick="showInfoAndFillForm(this);"> Edit </a>
-                        <a id="resetButton" href="#" class="btn btn-sm btn-danger" onclick="openPopupDelete()">Delete</a>
+                        <a  href="#" class="btn btn-sm btn-primary edit" onclick="showInfoAndFillForm(this);"> <i class="fa-solid fa-pen-to-square" style="margin-right: 0.3rem"></i>Edit </a>
+                        <a  href="#" class="btn btn-sm btn-danger delete-button" data-product-id="<%=b.getBookId()%>"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem"></i>Delete</a>
                     </td>
                 </tr>
                 <%
@@ -257,6 +302,36 @@
 
 
 
+        <!-- Bootstrap Modals -->
+        <div class="modal fade" id="accessDeniedModal" tabindex="-1" aria-labelledby="accessDeniedLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="accessDeniedLabel">Access Denied</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        You are not authorized to access this page. Please log in.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="permissionDeniedModal" tabindex="-1" aria-labelledby="permissionDeniedLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="permissionDeniedLabel">Permission Denied</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        You do not have permission to access this page.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <!--            ///////////-->
 
@@ -278,24 +353,19 @@
                 }
             }
             );
-
             overlay.addEventListener('click', () =>
             {
                 overlay.style.display = 'none';
                 document.querySelector(".popup2").classList.remove("active");
-
             });
-
             document.querySelector(".popup2 .close-btn").addEventListener("click", function ()
 
 
             {
                 document.querySelector(".popup2").classList.remove("active");
                 overlay.style.display = 'none';
-
             }
             );
-
             document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape') {
                     // Xử lý khi người dùng nhấn phím Esc ở đây
@@ -323,7 +393,6 @@
                                         icon: "success",
                                     });
                                 }, 1000);
-
                             } else {
                                 swal("You have exited book editing!");
                                 document.querySelector(".popup2").classList.remove("active");
@@ -349,10 +418,7 @@
                             }
                         });
             }
-
-
         </script>
         <!--    <script src="../../JS/myjs.js" ></script>-->
-
     </body>
 </html>
