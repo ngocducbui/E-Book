@@ -73,4 +73,31 @@ public class BookDAOImpl implements BookDAO {
         return list;
     }
 
+    @Override
+    public boolean UpdateBook(Book book) {
+        boolean f = false;
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String sql = "UPDATE ebook.book\n"
+                    + "SET bookname=?, author=?, price=?, bookcategory=?, status=?, photo=?\n"
+                    + "WHERE bookId=?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, book.getBookName());
+            ps.setString(2, book.getAuthor());
+            ps.setString(3, book.getPrice());
+            ps.setString(4, book.getBookCategory());
+            ps.setString(5, book.getStatus());
+            ps.setString(6, book.getPhotoName());
+            ps.setInt(7, book.getBookId());
+            int i = ps.executeUpdate();
+            if (i == 1) {
+                f = true;
+            }
+        } catch (Exception e) {
+        }
+        return f;
+    }
+
 }

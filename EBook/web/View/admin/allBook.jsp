@@ -9,6 +9,8 @@
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,13 +34,43 @@
                 console.log(rowData);
 
                 // Điền dữ liệu từ rowData vào các trường của biểu mẫu
+                $('#id').val(rowData[0]);
                 $('#exampleInputName').val(rowData[2]);
                 $('#exampleInputAuthor').val(rowData[3]);
                 $('#exampleInputPrice').val(rowData[4]);
                 $('#inputState').val(rowData[5]);
                 $('#inputStatus').val(rowData[6]);
-            }
+                var currentUrl = window.location.href;
+                var fourthData = rowData[7];
+                var imageUrl = "../../book/" + fourthData;
+                // var imageContainer = document.getElementById('imageContainer');
 
+//                if (!imageContainer.querySelector('img')) {
+//
+//                    var imgElement = document.createElement('img');
+////                imgElement.onload = function () {
+////                    var width = 50px;
+////                    var height =50px;
+////
+////                };
+//                    imgElement.src = imageUrl;
+//                    imgElement.style.width = "50px";
+//                    imgElement.style.height = "50px";
+//                    var imageContainer = document.getElementById('imageContainer');
+//                    imageContainer.appendChild(imgElement);
+//
+//
+//
+//                    var resetButton = document.getElementById('resetButton');
+//                    resetButton.addEventListener('click', function () {
+//                        imgElement.src = ""; // Khôi phục lại hình ảnh ban đầu
+//
+//                    });
+//                }
+                var anh = document.getElementById('anh');
+                anh.src = imageUrl;
+
+            }
 
 
         </script>
@@ -79,9 +111,11 @@
                     <td><%=b.getPrice()%></td>
                     <td><%=b.getBookCategory()%></td>
                     <td><%=b.getStatus()%></td>
+                    <td style="display: none;"><%=b.getPhotoName()%></td>
+
                     <td>
                         <a  href="#" class="btn btn-sm btn-primary edit" onclick="showInfoAndFillForm(this);"> Edit </a>
-                        <a id="close" href="#" class="btn btn-sm btn-danger">Delete</a>
+                        <a id="resetButton" href="#" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
                 <%
@@ -102,43 +136,43 @@
                             <div class="card">
                                 <div class="card-body ">
                                     <h4 class="text-center">Login Page</h4>
-                                    <c:if test="${not empty failedMsg}">
-                                        <p class="text-center text-danger">${failedMsg}</p>
-                                        <c:remove var="failedMsg" scope="session" />
-        
-                                    </c:if>
-                                    <form action="/EBook/Login" method="post">
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="required" name="email">
-                                            <div id="emailHelp" class="form-text"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword1" required="required" name="password">
-                                        </div>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                        </div>
-                                        <br>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary mb-2">Login</button>
-                                            <br>
-                                            <a href="<%=url%>/View/register.jsp" style="text-decoration: none">Create Account</a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+        <c:if test="${not empty failedMsg}">
+            <p class="text-center text-danger">${failedMsg}</p>
+            <c:remove var="failedMsg" scope="session" />
+
+        </c:if>
+        <form action="/EBook/Login" method="post">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="required" name="email">
+                <div id="emailHelp" class="form-text"></div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" required="required" name="password">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <br>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mb-2">Login</button>
+                <br>
+                <a href="<%=url%>/View/register.jsp" style="text-decoration: none">Create Account</a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div>-->
 
 
 
         <div class="popup2">
             <div class="close-btn">&times;</div>
-            <h4 class="text-center">Add Book</h4>
+            <h4 class="text-center">Edit Book</h4>
             <c:if test="${not empty successMsg}">
                 <p class="text-center text-success">${successMsg}</p>
                 <c:remove var="successMsg" scope="session" />
@@ -148,7 +182,13 @@
                 <c:remove var="failedMsg" scope="session" />
 
             </c:if>
-            <form action="/EBook/AddBook" method="post" enctype="multipart/form-data">
+            <form action="/EBook/AddBook" id="editform" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="formType" value="editform">
+
+                <div class="form-group mb-3 " >
+                    <label for="id" class="form-label">IDDD<span class="red-star">*</span></label>
+                    <input name="idbook" type="text" class="form-control" id="id" aria-describedby="">
+                </div>
                 <div class="form-group mb-3">
                     <label for="exampleInputName" class="form-label">Book Name<span class="red-star">*</span></label>
                     <input name="bookname" type="text" class="form-control" id="exampleInputName" aria-describedby="">
@@ -171,7 +211,7 @@
                         <option value="new">New Book</option>
                     </select>
                 </div>
-
+                s
 
                 <div class="form-group mb-3">
                     <label for="inputStatus" class="form-label">Book Status<span class="red-star">*</span></label>
@@ -181,14 +221,23 @@
                         <option value="Inactive">Inactive</option>
                     </select>
                 </div>
-
-                <div class="form-group mb-3">
-                    <label for="exampleInputImg" class="form-label">Upload Photo</label>
-                    <input name="img" type="file" class="form-control-file" id="exampleInputImg">
+                <div class="d-flex form-group mb-3">
+                    <div class="mr-3" style="margin-right: 1rem">
+                        <img id="anh" style="width: 120px; height: 150px">
+                    </div>
+                    <div class="form-group mb-3 ml-4 mt-auto justify-content-center">
+                        <%
+                            String path = getServletContext().getRealPath("") + "book";
+                            String path_new = path.replace(String.valueOf("\\build"), "");
+                        %>
+                        <label  for="exampleInputImg" class="form-label">Upload Photo</label>
+                        <input  name="img" type="file" class="form-control-file " id="exampleInputImg">
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Add</button>
+
+                <div class="text-center form-group mb-1 mt-2 ">
+                    <button type="submit" class="btn btn-primary w-50">Change</button>
                 </div>
             </form>
         </div>
@@ -231,7 +280,8 @@
                 document.querySelector(".popup2").classList.remove("active");
                 overlay.style.display = 'none';
 
-            });
+            }
+            );
         </script>
         <!--    <script src="../../JS/myjs.js" ></script>-->
 

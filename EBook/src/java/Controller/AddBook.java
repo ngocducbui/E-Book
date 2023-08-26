@@ -78,41 +78,77 @@ public class AddBook extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
+        PrintWriter out = response.getWriter();
+        String formType = request.getParameter("formType");
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+
         try {
-            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            //String url=getServletContext().getRealPath("");
-            String bookName = request.getParameter("bookname");
-            String author = request.getParameter("author");
-            String price = request.getParameter("price");
-            String categories = request.getParameter("btype");
-            String status = request.getParameter("bstatus");
-            Part part = request.getPart("img");
-            String fileName = part.getSubmittedFileName();
+            if ("editform".equals(formType)) {
+                String bookName = request.getParameter("bookname");
+                String id_new = request.getParameter("idbook").trim();
+                // int id = Integer.parseInt(request.getParameter("idbook"));
+                int id = Integer.parseInt(id_new);
+                String author = request.getParameter("author");
+                String price = request.getParameter("price");
+                String categories = request.getParameter("btype");
+                String status = request.getParameter("bstatus");
+                Part part = request.getPart("img");
+                String fileName = part.getSubmittedFileName();
 
-            Book book = new Book(bookName, author, price, categories, status, fileName, "Admin");
+                Book b = new Book();
+                b.setBookId(id);
+                b.setBookName(bookName);
+                b.setAuthor(author);
+                b.setPrice(price);
+                b.setBookCategory(categories);
+                b.setStatus(status);
 
-            BookDAOImpl dao = new BookDAOImpl();
-            boolean f = dao.addBook(book);
+                BookDAOImpl dao = new BookDAOImpl();
+                boolean f = dao.UpdateBook(b);
+                HttpSession session = request.getSession();
+                url += "/View/admin/allBook.jsp";
 
-            HttpSession session = request.getSession();
+                if (f) {
+                    session.setAttribute("successMsg", "Book Update Successfully.");
+                    response.sendRedirect(url);
+                } else {
+                    session.setAttribute("failedMsg", "Something wrong!");
+                    response.sendRedirect(url);
+                }
 
-            url += "/View/admin/addBook.jsp";
-            if (true) {
-                String path = getServletContext().getRealPath("") + "book";
-                String path_new = path.replace(String.valueOf("\\build"), "");
-                File file = new File(path);
-                part.write(path_new + File.separator + fileName);
-                session.setAttribute("successMsg", "Book Add Successfully.");
-                response.sendRedirect(url);
             } else {
-                session.setAttribute("failedMsg", "Something wrong!");
-                response.sendRedirect(url);
-            }
+                //String url=getServletContext().getRealPath("");
+                String bookName = request.getParameter("bookname");
+                String author = request.getParameter("author");
+                String price = request.getParameter("price");
+                String categories = request.getParameter("btype");
+                String status = request.getParameter("bstatus");
+                Part part = request.getPart("img");
+                String fileName = part.getSubmittedFileName();
 
+                Book book = new Book(bookName, author, price, categories, status, fileName, "Admin");
+
+                BookDAOImpl dao = new BookDAOImpl();
+                boolean f = dao.addBook(book);
+
+                HttpSession session = request.getSession();
+
+                url += "/View/admin/addBook.jsp";
+                if (true) {
+                    String path = getServletContext().getRealPath("") + "book";
+                    String path_new = path.replace(String.valueOf("\\build"), "");
+                    File file = new File(path);
+                    part.write(path_new + File.separator + fileName);
+                    session.setAttribute("successMsg", "Book Add Successfully.");
+                    response.sendRedirect(url);
+                } else {
+                    session.setAttribute("failedMsg", "Something wrong!");
+                    response.sendRedirect(url);
+                }
+
+            }
         } catch (Exception e) {
+            out.print(e.getMessage());
         }
 
     }

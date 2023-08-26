@@ -64,8 +64,8 @@
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check">
                                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                                 </div>
-                                <div class="text-center">                          
-                                    <button type="submit" class="btn btn-primary ">Register</button>
+                                <div class="text-center mt-2">                          
+                                    <button type="submit" class="btn btn-primary w-50">Register</button>
                                 </div>
                             </form>
                         </div>

@@ -50,7 +50,7 @@
                                 </div>
                                 <br>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary mb-2">Login</button>
+                                    <button type="submit" class="btn btn-primary mb-2 w-50">Login</button>
                                     <br>
                                     <a href="<%=url%>/View/register.jsp" style="text-decoration: none">Create Account</a>
                                 </div>
