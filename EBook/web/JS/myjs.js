@@ -24,33 +24,47 @@ overlay.addEventListener('click', () => {
 
 });
 
-/////////////////////
-const myButton = document.getElementById('myButton');
-const myForm = document.getElementById('myForm');
-
-myButton.addEventListener('click', () => {
-    const buttonValue = myButton.value;
-
-    // Use AJAX to send data to the server
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '../EBook/AddBook', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            // Handle response from the server if needed
-        }
-    };
-
-    const dataToSend = `buttonValue=${encodeURIComponent(buttonValue)}`;
-    xhr.send(dataToSend);
+document.addEventListener('keyup', function (event) {
+    if (event.key === 'Escape') {
+        overlay.style.display = 'none';
+        document.querySelector(".popup2").classList.remove("active");
+    }
 });
 
-
-/////
-
-
-const myList = [1, 2, 3, 4, 5];
-const serializedList = myList.join(',');
-
-const url = 'http://localhost:8080/EBook/test.jsp?list=' + encodeURIComponent(serializedList);
-window.location.href = url;
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        // Xử lý khi người dùng nhấn phím Esc ở đây
+        overlay.style.display = 'none';
+        document.querySelector(".popup2").classList.remove("active");
+    }
+});
+/////////////////////
+//const myButton = document.getElementById('myButton');
+//const myForm = document.getElementById('myForm');
+//
+//myButton.addEventListener('click', () => {
+//    const buttonValue = myButton.value;
+//
+//    // Use AJAX to send data to the server
+//    const xhr = new XMLHttpRequest();
+//    xhr.open('POST', '../EBook/AddBook', true);
+//    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//    xhr.onreadystatechange = function () {
+//        if (xhr.readyState === XMLHttpRequest.DONE) {
+//            // Handle response from the server if needed
+//        }
+//    };
+//
+//    const dataToSend = `buttonValue=${encodeURIComponent(buttonValue)}`;
+//    xhr.send(dataToSend);
+//});
+//
+//
+///////
+//
+//
+//const myList = [1, 2, 3, 4, 5];
+//const serializedList = myList.join(',');
+//
+//const url = 'http://localhost:8080/EBook/test.jsp?list=' + encodeURIComponent(serializedList);
+//window.location.href = url;

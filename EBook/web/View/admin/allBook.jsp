@@ -23,8 +23,20 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
         <script>
+            window.onload = function () {
+                // Kiểm tra xem có thuộc tính thành công hay không
+                var success = <%= request.getAttribute("success")%>;
+
+                if (success) {
+                    // Hiển thị pop-up thông báo thành công
+                     swal("Poof! Your imaginary file has been deleted!", {
+                                        icon: "success",
+                                    });
+                }
+            };
             function showInfoAndFillForm(row) {
                 var rowData = $(row).closest('tr').find('td').map(function () {
                     return $(this).text();
@@ -115,7 +127,7 @@
 
                     <td>
                         <a  href="#" class="btn btn-sm btn-primary edit" onclick="showInfoAndFillForm(this);"> Edit </a>
-                        <a id="resetButton" href="#" class="btn btn-sm btn-danger">Delete</a>
+                        <a id="resetButton" href="#" class="btn btn-sm btn-danger" onclick="openPopupDelete()">Delete</a>
                     </td>
                 </tr>
                 <%
@@ -177,6 +189,7 @@
                 <p class="text-center text-success">${successMsg}</p>
                 <c:remove var="successMsg" scope="session" />
             </c:if>
+
             <c:if test="${not empty failedMsg}">
                 <p class="text-center text-danger">${failedMsg}</p>
                 <c:remove var="failedMsg" scope="session" />
@@ -185,7 +198,7 @@
             <form action="/EBook/AddBook" id="editform" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="formType" value="editform">
 
-                <div class="form-group mb-3 " >
+                <div class="form-group mb-3" style="display:none" >
                     <label for="id" class="form-label">IDDD<span class="red-star">*</span></label>
                     <input name="idbook" type="text" class="form-control" id="id" aria-describedby="">
                 </div>
@@ -211,7 +224,7 @@
                         <option value="new">New Book</option>
                     </select>
                 </div>
-                s
+
 
                 <div class="form-group mb-3">
                     <label for="inputStatus" class="form-label">Book Status<span class="red-star">*</span></label>
@@ -237,7 +250,7 @@
 
 
                 <div class="text-center form-group mb-1 mt-2 ">
-                    <button type="submit" class="btn btn-primary w-50">Change</button>
+                    <button type="button" class="btn btn-primary w-50" id="submitButton">Change</button>
                 </div>
             </form>
         </div>
@@ -282,6 +295,62 @@
 
             }
             );
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    // Xử lý khi người dùng nhấn phím Esc ở đây
+                    overlay.style.display = 'none';
+                    document.querySelector(".popup2").classList.remove("active");
+                }
+            });
+            document.getElementById("submitButton").addEventListener("click", function (event) {
+                openPopupEdit(event); // Gọi hàm openPopupEdit và truyền sự kiện vào
+            });
+            function openPopupEdit(event) {
+                event.preventDefault();
+                swal({
+                    title: "Are you sure?",
+                    text: "After editing, the original data of the file will be lost!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                document.getElementById("editform").submit();
+                                setTimeout(function () {
+                                    swal("Poof! Your imaginary file has been deleted!", {
+                                        icon: "success",
+                                    });
+                                }, 1000);
+
+                            } else {
+                                swal("You have exited book editing!");
+                                document.querySelector(".popup2").classList.remove("active");
+                                overlay.style.display = 'none';
+                            }
+                        });
+            }
+            function openPopupDelete() {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                });
+                            } else {
+                                swal("Your imaginary file is safe!");
+                            }
+                        });
+            }
+
+
         </script>
         <!--    <script src="../../JS/myjs.js" ></script>-->
 

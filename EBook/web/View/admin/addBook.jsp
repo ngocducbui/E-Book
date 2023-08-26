@@ -42,7 +42,7 @@
 
                             </c:if>
                             <form action="/EBook/AddBook" method="post" enctype="multipart/form-data">
-                                <div class="form-group mb-3">
+                                <div class="form-group mb-3" >
                                     <label for="exampleInputName" class="form-label">Book Name<span class="red-star">*</span></label>
                                     <input name="bookname" type="text" class="form-control" id="exampleInputName" aria-describedby="">
                                 </div>

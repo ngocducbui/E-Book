@@ -11,27 +11,71 @@
 <%@page import="java.util.List"%>
 <%@ page import="org.json.JSONArray" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
-            function showInfoAndFillForm(row) {
-                var rowData = $(row).closest('tr').find('td').map(function () {
-                    return $(this).text();
-                }).get();
+            function sendRequestToServlet() {
+                return new Promise((resolve, reject) => {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "duc2", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-                // Hiển thị danh sách dữ liệu trong console (để kiểm tra)
-                console.log(rowData);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                resolve(response);
+                            } else {
+                                reject();
+                            }
+                        }
+                    };
 
-                // Điền dữ liệu từ rowData vào các trường của biểu mẫu
-                $('#idInput').val(rowData[0]);
-                $('#nameInput').val(rowData[1]);
+                    xhr.send(); // Gửi yêu cầu
+                });
             }
 
-           
+// Trong sự kiện click của nút
+            document.getElementById("submitButton").addEventListener("click", function (event) {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của nút submit
+
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        sendRequestToServlet()
+                                .then(response => {
+                                    if (response.success) {
+                                        swal("Success! Your operation was successful.", {
+                                            icon: "success",
+                                        });
+                                    } else {
+                                        swal("Oops! Something went wrong.", {
+                                            icon: "error",
+                                        });
+                                    }
+                                })
+                                .catch(() => {
+                                    swal("An error occurred while communicating with the server.", {
+                                        icon: "error",
+                                    });
+                                });
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+            });
+
         </script>
     </head>
     <body>

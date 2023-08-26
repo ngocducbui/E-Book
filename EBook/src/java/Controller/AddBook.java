@@ -9,6 +9,7 @@ import Model.Book;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -106,14 +107,16 @@ public class AddBook extends HttpServlet {
                 BookDAOImpl dao = new BookDAOImpl();
                 boolean f = dao.UpdateBook(b);
                 HttpSession session = request.getSession();
-                url += "/View/admin/allBook.jsp";
+                url = "/View/admin/allBook.jsp";
 
                 if (f) {
-                    session.setAttribute("successMsg", "Book Update Successfully.");
-                    response.sendRedirect(url);
+                    request.setAttribute("success", true);
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
                 } else {
-                    session.setAttribute("failedMsg", "Something wrong!");
-                    response.sendRedirect(url);
+                    request.setAttribute("success", false);
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
                 }
 
             } else {

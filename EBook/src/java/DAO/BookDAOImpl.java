@@ -80,7 +80,7 @@ public class BookDAOImpl implements BookDAO {
             Connection con = DBConnection.getConnection();
 
             String sql = "UPDATE ebook.book\n"
-                    + "SET bookname=?, author=?, price=?, bookcategory=?, status=?, photo=?\n"
+                    + "SET bookname=?, author=?, price=?, bookcategory=?, status=?\n"
                     + "WHERE bookId=?;";
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -89,8 +89,7 @@ public class BookDAOImpl implements BookDAO {
             ps.setString(3, book.getPrice());
             ps.setString(4, book.getBookCategory());
             ps.setString(5, book.getStatus());
-            ps.setString(6, book.getPhotoName());
-            ps.setInt(7, book.getBookId());
+            ps.setInt(6, book.getBookId());
             int i = ps.executeUpdate();
             if (i == 1) {
                 f = true;
