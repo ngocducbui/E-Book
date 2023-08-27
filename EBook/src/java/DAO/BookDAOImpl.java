@@ -322,4 +322,33 @@ public class BookDAOImpl implements BookDAO {
 
     }
 
+    @Override
+    public Book getBookById(int id) {
+        Book book = null;
+        Connection con = DBConnection.getConnection();
+        try {
+
+            String sql = "select * from book where bookId=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                book = new Book();
+                book.setBookId(rs.getInt(1));
+                book.setBookName(rs.getString(2));
+                book.setAuthor(rs.getString(3));
+                book.setPrice(rs.getString(4));
+                book.setBookCategory(rs.getString(5));
+                book.setStatus(rs.getString(6));
+                book.setPhotoName(rs.getString(7));
+                book.setEmail(rs.getString(8));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return book;
+
+    }
+
 }
