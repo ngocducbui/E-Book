@@ -120,11 +120,12 @@
                 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
                 <script>
-            // $('#accessDeniedModal').modal('show');
-            window.location.href = '../login.jsp';
             swal("Delete Successful", {
                 icon: "success",
             });
+            // $('#accessDeniedModal').modal('show');
+            window.location.href = '../login.jsp';
+
                 </script>
             </c:if>
             <c:if test="${not empty userObj}">
@@ -161,13 +162,25 @@
                     for (Book b : list_book) {
                 %>
                 <tr class="product">
-                    <td scope="row"> <%=b.getBookId()%></td>
+                    <td scope="row" > <%=b.getBookId()%></td>
                     <td><img src="<%=url%>/book/<%=b.getPhotoName()%>" style="width: 50px;height: 50px"></td>
-                    <td class="product-name"><%=b.getBookName()%></td>
+                    <td class="product-name" style="font-weight: bold;"><%=b.getBookName()%></td>
                     <td><%=b.getAuthor()%></td>
                     <td class="product-price"><%=b.getPrice()%></td>
                     <td><%=b.getBookCategory()%></td>
-                    <td><%=b.getStatus()%></td>
+                    <%
+                        String status = b.getStatus();
+                        if (status.equals("Active")) {
+                    %>
+                    <td style="color: #22bf76"><%=b.getStatus()%></td>
+
+                    <%
+                    } else {
+                    %>
+                    <td style="color: red"><%=b.getStatus()%></td>
+                    <%
+                        }
+                    %>
                     <td style="display: none;"><%=b.getPhotoName()%></td>
 
                     <td>
@@ -266,7 +279,8 @@
                     <label for="inputState" class="form-label">Book Categories<span class="red-star">*</span></label>
                     <select name="btype" class="form-control form-select" id="inputState">
                         <option selected>--select--</option>
-                        <option value="new">New Book</option>
+                        <option value="New">New Book</option>
+                        <option value="Old">New Book</option>
                     </select>
                 </div>
 

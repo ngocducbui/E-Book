@@ -61,7 +61,8 @@
                                     <label for="inputState" class="form-label">Book Categories<span class="red-star">*</span></label>
                                     <select name="btype" class="form-control form-select" id="inputState">
                                         <option selected>--select--</option>
-                                        <option value="new">New Book</option>
+                                        <option value="New">New Book</option>
+                                        <option value="Old">Old Book</option>
                                     </select>
                                 </div>
 

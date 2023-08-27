@@ -76,7 +76,8 @@ public class DeleteProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try {
             boolean deleteSuccess = false;
             String productId = request.getParameter("productId");

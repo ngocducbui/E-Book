@@ -78,13 +78,13 @@
                     <a class="nav-link active" href="<%=url%>/index.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"> <i class="fa-solid fa-book-open " style="margin-right: 0.3rem" ></i>Recent Book</a>
+                    <a class="nav-link active" href="<%=url%>/View/all_recent_book.jsp"> <i class="fa-solid fa-book-open " style="margin-right: 0.3rem" ></i>Recent Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"> <i class="fa-solid fa-book-open" style="margin-right: 0.3rem"></i>New Book</a>
+                    <a class="nav-link active" href="<%=url%>/View/all_new_book.jsp"> <i class="fa-solid fa-book-open" style="margin-right: 0.3rem"></i>New Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="fas fa-book-open" style="margin-right: 0.3rem"></i>Old Book</a>
+                    <a class="nav-link active" href="<%=url%>/View/all_old_book.jsp"><i class="fas fa-book-open" style="margin-right: 0.3rem"></i>Old Book</a>
                 </li>
 
             </ul>

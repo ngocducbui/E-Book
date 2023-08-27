@@ -16,7 +16,7 @@ h1{
     background-size: cover;
 }
 .crd-ho:hover{
-    background-color: #fcf7f7
+    background-color: #bdd6ff;
 }
 .content {
     position: relative; /* Đảm bảo phần tử overlay nằm trong phạm vi của div */
@@ -123,4 +123,9 @@ h1{
     color:#f5f5f5;
     border-radius: 10px;
     cursor: pointer;
+}
+.no-click {
+    pointer-events: none;
+    background-color: gray;
+    color: white;
 }

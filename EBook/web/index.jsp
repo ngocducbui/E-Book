@@ -4,6 +4,9 @@
     Author     : ADMIN
 --%>
 
+<%@page import="Model.Book"%>
+<%@page import="java.util.List"%>
+<%@page import="DAO.BookDAOImpl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -12,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>EBook:</title>
+        <title>EBook: Home</title>
         <link  type="text/css" rel="stylesheet" href="<%=url%>/CSS/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -52,69 +55,29 @@
         <div class="container" >
             <h3 class="text-center">Recent Book</h3>
             <div class="row ">
+                <%
+                    BookDAOImpl dao = new BookDAOImpl();
+                    List<Book> list_re = dao.getRecentBook();
+                    for (Book book : list_re) {
+                %>
                 <div class="col-md-3">
                     <div class="card crd-ho" >
                         <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
+                            <img alt="" src="book/<%=book.getPhotoName()%>" style="width: 200px;height: 250px;" class="img-thumblin">
+                            <h5 class="card-title"><%=book.getBookName()%></h5>
+                            <p><%=book.getAuthor()%></p>
+                            <p>Category: <%=book.getBookCategory()%></p>
                             <div class="row text-center justify-content-between">
                                 <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
+                                <a href="<%=url%>/View/detail_book.jsp" class="btn btn-success btn-sm col-md-4">View Details</a>
+                                <a href="" class="btn btn-danger btn-sm col-md-3"><i class="fa-solid fa-dollar-sign" style="margin-right: 0.1rem"></i><%=book.getPrice()%></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%
+                    }
+                %>
 
                 <div class="text-center mt-4">
                     <a href="" class="btn btn-danger btn-sm">View All</a>
@@ -127,69 +90,34 @@
         <div class="container" >
             <h3 class="text-center">New Book</h3>
             <div class="row ">
+
+                <%
+                    List<Book> list = dao.getNewBook();
+                    for (Book book : list) {
+                %>
                 <div class="col-md-3 bg-light">
+
                     <div class="card crd-ho" >
                         <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
+                            <img alt="" src="book/<%=book.getPhotoName()%>" style="width: 200px;height: 250px;" class="img-thumblin">
+                            <h5 class="card-title"><%=book.getBookName()%></h5>
+                            <p><%=book.getAuthor()%></p>
+                            <p>Category: <%=book.getBookCategory()%></p>
                             <div class="row text-center justify-content-between">
                                 <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
                                 <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
+                                <a href="" class="btn btn-danger btn-sm col-md-3"><i class="fa-solid fa-dollar-sign" style="margin-right: 0.1rem"></i><%=book.getPrice()%></a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%
+                    }
+                %>
 
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <br>
                 <div class="text-center mt-4">
                     <a href="" class="btn btn-danger btn-sm">View All</a>
@@ -201,71 +129,32 @@
 
         <!--        Old book-->
         <div class="container" >
-            <h3 class="text-center">Olds Book</h3>
+            <h3 class="text-center">Old Book</h3>
             <div class="row ">
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%
+                    List<Book> list_old = dao.getOldBook();
+                    for (Book book : list_old) {
+                %>
+                <div class="col-md-3 bg-light">
 
-                <div class="col-md-3">
                     <div class="card crd-ho" >
                         <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
+                            <img alt="" src="book/<%=book.getPhotoName()%>" style="width: 200px;height: 250px;" class="img-thumblin">
+                            <h5 class="card-title"><%=book.getBookName()%></h5>
+                            <p><%=book.getAuthor()%></p>
+                            <p>Category: <%=book.getBookCategory()%></p>
                             <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <a href="" class="btn btn-danger btn-sm col-md-4 no-click"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
                                 <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
+                                <a href="" class="btn btn-danger btn-sm col-md-3 "><i class="fa-solid fa-dollar-sign" style="margin-right: 0.1rem; "></i><%=book.getPrice()%></a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <%
+                    }
+                %>
 
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card crd-ho" >
-                        <div class="card-body text-center">
-                            <img alt="" src="book/python.jpg" style="width: 200px;height: 250px;" class="img-thumblin">
-                            <p>Java Programming</p>
-                            <p>Balumahuwnw</p>
-                            <p>Category:New</p>
-                            <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
-                                <a href="" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3">299</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <br>
                 <div class="text-center mt-4">
                     <a href="" class="btn btn-danger btn-sm">View All</a>
