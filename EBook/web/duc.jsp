@@ -15,61 +15,94 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" type="image/png" sizes="32x32"  class="rotate-icon" href="book/132332687_1877481222429292_8982841910306197256_o.jpg">
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .rotate-icon {
+                animation: spin 2s linear infinite;
+            }
+        </style>
         <script>
-            $(document).ready(function () {
-                $(".delete-button").click(function () {
-                    var productDiv = $(this).closest(".product");
-                    var productPrice = parseFloat(productDiv.find(".product-price").text().substring(1));
-                    var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
 
-                    var newTotalPrice = currentTotalPrice - productPrice;
-                    $("#total-price").text("$" + newTotalPrice.toFixed(2));
 
-                    productDiv.remove();
+            const iconLink = document.querySelector('link[rel="icon"]');
 
-                    swal("Delete Successful", {
-                        icon: "success",
-                    });
+// Thêm class rotate-icon để bắt đầu hoạt hình
+            iconLink.classList.add('rotate-icon');
 
-                    // ... AJAX request to delete product ...
-                });
-            });
+// Đợi một khoảng thời gian sau đó xoá class để dừng hoạt hình
+            setTimeout(() => {
+                iconLink.classList.remove('rotate-icon');
+            }, 5000); // Thời gian hoạt hình (ms)
+
 
         </script>
+
     </head>
     <body>
-        <table>
-            <tr class="product">
-                <td class="product-name">Product A</td>
-                <td class="product-price">$25.99</td>
-                <td><button class="delete-button" data-product-id="1">Delete</button></td>
-            </tr>
-            <tr class="product">
-                <td class="product-name">Product A</td>
-                <td class="product-price">$25.99</td>
-                <td><button class="delete-button" data-product-id="1">Delete</button></td>
-            </tr>
-            <tr class="product">
-                <td class="product-name">Product A</td>
-                <td class="product-price">$25.99</td>
-                <td><button class="delete-button" data-product-id="1">Delete</button></td>
-            </tr>
-            <tr class="product">
-                <td class="product-name">Product A</td>
-                <td class="product-price">$25.99</td>
-                <td><button class="delete-button" data-product-id="1">Delete</button></td>
-            </tr>
-            <!-- ... other products ... -->
-            <tr>
-                <td>Total Price:<span style="margin-left: 1rem" id="total-price">$100.00</span></td>
-            </tr>
+
+
+
+
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>Người 1</td>
+                    <td><button onclick="deleteRow(this)">Xoá</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Người 2</td>
+                    <td><button onclick="deleteRow(this)">Xoá</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Người 3</td>
+                    <td><button onclick="deleteRow(this)">Xoá</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Người 3</td>
+                    <td><button onclick="deleteRow(this)">Xoá</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Người 3</td>
+                    <td><button onclick="deleteRow(this)">Xoá</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Người 3</td>
+                    <td><button onclick="deleteRow(this)">Xoá</button></td>
+                </tr>
+
+            </tbody>
         </table>
+
+
+
+
     </body>
 </html>

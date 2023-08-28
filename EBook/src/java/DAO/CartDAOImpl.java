@@ -39,6 +39,8 @@ public class CartDAOImpl implements CartDAO {
             if (i == 1) {
                 f = true;
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,6 +68,7 @@ public class CartDAOImpl implements CartDAO {
                 cart.setTotalPrice(Double.parseDouble(rs.getString(7)));
                 list.add(cart);
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,6 +101,8 @@ public class CartDAOImpl implements CartDAO {
                 cart.setTotalPrice(total);
                 list.add(cart);
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,6 +125,8 @@ public class CartDAOImpl implements CartDAO {
             if (i == 1) {
                 f = true;
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
         }
         return f;

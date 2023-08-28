@@ -22,6 +22,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>EBook: Home</title>
+        <link rel="icon" type="image/jpg" sizes="16x16" href="book/316177185_1522790028184698_4331292790512062342_n.jpg">
+
         <link  type="text/css" rel="stylesheet" href="<%=url%>/CSS/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -33,7 +35,7 @@
 
             window.onload = function () {
                 // Kiểm tra xem có thuộc tính thành công hay không
-                logout=false;
+                logout = false;
                 var logout = <%= request.getAttribute("logout")%>;
 
                 if (logout) {
@@ -41,7 +43,7 @@
                     swal("Congratulations. You have successfully logged out", {
                         icon: "success",
                     });
-                    
+
                 }
             };
 
@@ -49,7 +51,7 @@
     </head>
     <body style="background-color:#f7f7f7 ">
 
-       
+
         <%@include file= "View/navbar.jsp"%>
 
 
@@ -63,8 +65,7 @@
         <div class="container" >
             <h3 class="text-center">Recent Book</h3>
             <div class="row ">
-                <%
-                    BookDAOImpl dao = new BookDAOImpl();
+                <%                    BookDAOImpl dao = new BookDAOImpl();
                     List<Book> list_re = dao.getRecentBook();
                     for (Book book : list_re) {
                 %>

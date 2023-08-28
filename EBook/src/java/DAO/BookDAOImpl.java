@@ -39,6 +39,8 @@ public class BookDAOImpl implements BookDAO {
             if (i == 1) {
                 f = true;
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
         }
         return f;
@@ -66,6 +68,7 @@ public class BookDAOImpl implements BookDAO {
                 book.setEmail(rs.getString(8));
                 list.add(book);
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,6 +97,8 @@ public class BookDAOImpl implements BookDAO {
             if (i == 1) {
                 f = true;
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
         }
         return f;
@@ -116,6 +121,8 @@ public class BookDAOImpl implements BookDAO {
             if (i == 1) {
                 f = true;
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
         }
         return f;
@@ -149,6 +156,7 @@ public class BookDAOImpl implements BookDAO {
                 list.add(book);
                 i++;
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,6 +190,7 @@ public class BookDAOImpl implements BookDAO {
                 list.add(book);
                 i++;
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,6 +226,7 @@ public class BookDAOImpl implements BookDAO {
                 list.add(book);
                 i++;
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,6 +258,7 @@ public class BookDAOImpl implements BookDAO {
                 book.setEmail(rs.getString(8));
                 list.add(book);
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,6 +292,7 @@ public class BookDAOImpl implements BookDAO {
                 book.setEmail(rs.getString(8));
                 list.add(book);
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -314,6 +326,7 @@ public class BookDAOImpl implements BookDAO {
                 book.setEmail(rs.getString(8));
                 list.add(book);
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -343,6 +356,7 @@ public class BookDAOImpl implements BookDAO {
                 book.setPhotoName(rs.getString(7));
                 book.setEmail(rs.getString(8));
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();

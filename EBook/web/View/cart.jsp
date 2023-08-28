@@ -23,15 +23,16 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             window.onload = function () {
-                // Lấy tất cả các dòng trong tbody
+                updateRowNumbers();
+            };
+            function updateRowNumbers() {
                 const rows = document.querySelectorAll("#data-table tbody tr:not(.no-number)");
 
-                // Điền số thứ tự tự tăng vào cột đầu tiên
                 rows.forEach((row, index) => {
                     const numberCell = row.querySelector("td:first-child");
                     numberCell.textContent = index + 1;
                 });
-            };
+            }
 
 //            $(document).ready(function () {
 //                $(".delete-button").click(function () {
@@ -89,7 +90,7 @@
                             if (response.success) {
                                 // Xóa sản phẩm khỏi giao diện
                                 productDiv.remove();
-
+                                updateRowNumbers();
 //                                var productDiv2 = $(this).closest(".product");
 //                                var productPrice = parseFloat(productDiv2.find(".product-price").text().substring(1));
 //                                var currentTotalPrice = parseFloat($("#total-price").text().substring(1));

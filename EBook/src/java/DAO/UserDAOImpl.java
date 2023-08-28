@@ -34,6 +34,7 @@ public class UserDAOImpl implements UserDAO {
             if (i == 1) {
                 f = true;
             }
+            DBConnection.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,8 +52,8 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                user= new User();
+            while (rs.next()) {
+                user = new User();
                 user.setId(rs.getInt(1));
                 user.setName(rs.getString(2));
                 user.setEmail(rs.getString(3));
@@ -64,6 +65,8 @@ public class UserDAOImpl implements UserDAO {
                 user.setState(rs.getString(9));
                 user.setPinc(rs.getString(10));
             }
+            DBConnection.closeConnection(con);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
