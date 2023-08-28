@@ -14,6 +14,6 @@ import java.util.List;
 public interface CartDAO {
     public boolean addCart(Cart cart);
     public List<Cart> getAllCartByIdUser(int id);
-    
+    public boolean deleteCart(int id);
     
 }

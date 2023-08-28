@@ -79,6 +79,7 @@ public class CartDAOImpl implements CartDAO {
         List<Cart> list = new ArrayList<Cart>();
         Connection con = DBConnection.getConnection();
         Cart cart = null;
+        double total = 0.0;
         try {
 
             String sql = "select * from cart where uid=?;";
@@ -92,17 +93,36 @@ public class CartDAOImpl implements CartDAO {
                 cart.setUserid(rs.getInt(3));
                 cart.setBookName(rs.getString(4));
                 cart.setAuthor(rs.getString(5));
-                cart.setPrice(Double.parseDouble(rs.getString(6)));
-                cart.setTotalPrice(Double.parseDouble(rs.getString(7)));
+                cart.setPrice(rs.getDouble(6));
+                total = total + rs.getDouble(7);
+                cart.setTotalPrice(total);
                 list.add(cart);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
 
+    @Override
+    public boolean deleteCart(int id) {
+        boolean f = false;
+        try {
+            Connection con = DBConnection.getConnection();
 
+            String sql = "DELETE FROM ebook.cart\n"
+                    + "WHERE cid=?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            int i = ps.executeUpdate();
+            if (i == 1) {
+                f = true;
+            }
+        } catch (Exception e) {
+        }
+        return f;
+    }
 
 }

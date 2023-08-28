@@ -19,12 +19,113 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            window.onload = function () {
+                // Lấy tất cả các dòng trong tbody
+                const rows = document.querySelectorAll("#data-table tbody tr:not(.no-number)");
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                // Điền số thứ tự tự tăng vào cột đầu tiên
+                rows.forEach((row, index) => {
+                    const numberCell = row.querySelector("td:first-child");
+                    numberCell.textContent = index + 1;
+                });
+            };
+
+//            $(document).ready(function () {
+//                $(".delete-button").click(function () {
+//                    var productDiv = $(this).closest(".product");
+//                    var productName = productDiv.find(".product-name").text();
+//                    var productId = $(this).data("product-id");
+//
+//
+//
+//                    // Thực hiện AJAX để xóa sản phẩm
+//                    $.ajax({
+//                        type: "POST",
+//                        url: "http://localhost:8080/EBook/DeleteCart",
+//                        data: {productId: productId},
+//                        success: function (response) {
+//                            if (response.success) {
+//                                // Xóa sản phẩm khỏi giao diện
+//                                productDiv.remove();
+//
+//                                var productDiv2 = $(this).closest(".product");
+//                                var productPrice = parseFloat(productDiv2.find(".product-price").text().substring(1));
+//                                var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
+//                                var newTotalPrice = currentTotalPrice - productPrice;
+//                                $("#total-price").text("$" + newTotalPrice.toFixed(2));
+//
+//                                swal("Delete Successful", {
+//                                    icon: "success",
+//                                });
+//                            } else {
+//                                swal("Delete failed. Please try again later!");
+//                            }
+//                        },
+//                        error: function () {
+//                            swal("An error occurred while communicating with the server.");
+//                        }
+//                    });
+//                });
+//            });
+            $(document).ready(function () {
+                $(".delete-button").click(function () {
+                    var productDiv = $(this).closest(".product");
+                    var productPrice = parseFloat(productDiv.find(".product-price").text().substring(1));
+                    var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
+                    var productId = $(this).data("product-id");
+
+                    var newTotalPrice = currentTotalPrice - productPrice;
+                    $("#total-price").text("$" + newTotalPrice.toFixed(1));
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/EBook/DeleteCart",
+                        data: {productId: productId},
+                        success: function (response) {
+                            if (response.success) {
+                                // Xóa sản phẩm khỏi giao diện
+                                productDiv.remove();
+
+//                                var productDiv2 = $(this).closest(".product");
+//                                var productPrice = parseFloat(productDiv2.find(".product-price").text().substring(1));
+//                                var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
+//                                var newTotalPrice = currentTotalPrice - productPrice;
+//                                $("#total-price").text("$" + newTotalPrice.toFixed(2));
+
+                                swal("Delete Successful", {
+                                    icon: "success",
+                                });
+                            } else {
+                                swal("Delete failed. Please try again later!");
+                            }
+                        },
+                        error: function () {
+                            swal("An error occurred while communicating with the server.");
+                        }
+                    });
+
+
+
+
+                    swal("Delete Successful", {
+                        icon: "success",
+                    });
+
+                    // ... AJAX request to delete product ...
+                });
+            });
+        </script>
     </head>
     <body style="background-color: #f0f1f2">
-        <%@include file= "navbar.jsp"%>
 
+        <%@include file= "navbar.jsp"%>
+        <c:if test="${empty userObj}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
         <div class="container mt-4">
             <div class="row p-2">
                 <div class="col-md-6">
@@ -32,33 +133,38 @@
                         <div class="card-body">
                             <h3 class="text-center text-success">Your Select Item</h3>
 
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="data-table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Book Name</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
+                                    <%                                        CartDAOImpl dao = new CartDAOImpl();
+                                        List<Cart> list = new ArrayList<Cart>();
+                                        list = dao.getAllCartByIdUser(user.getId());
+                                        Double total = 0.00;
+                                        for (Cart cart : list) {
+                                            total = cart.getTotalPrice();
+                                    %>
+                                    <tr class="product">
+                                        <td >1</td>
+                                        <th scope="row" class="product-name"><%=cart.getBookName()%></th>
+                                        <td><%=cart.getAuthor()%></td>
+                                        <td class="product-price">$<%=cart.getPrice()%></td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-danger delete-button" data-product-id="<%=cart.getCid()%>">Remove</a>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
+                                    <%
+                                        }
+                                    %>
+                                    <tr class="no-number text-center">
+                                        <td colspan="5" class="text-success " style="font-size: 17px; font-weight: bold">Total Price:<span style="margin-left: 1rem" id="total-price">$<%=total%></span></td>
                                     </tr>
                                 </tbody>
                             </table>

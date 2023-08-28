@@ -26,67 +26,50 @@
             $(document).ready(function () {
                 $(".delete-button").click(function () {
                     var productDiv = $(this).closest(".product");
-                    var productName = productDiv.find(".product-name").text();
+                    var productPrice = parseFloat(productDiv.find(".product-price").text().substring(1));
+                    var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
 
-                    if (confirm("Do you want to delete the product: " + productName + "?")) {
-                        var productId = $(this).data("product-id");
+                    var newTotalPrice = currentTotalPrice - productPrice;
+                    $("#total-price").text("$" + newTotalPrice.toFixed(2));
 
-                        $.ajax({
-                            type: "POST",
-                            url: "duc2",
-                            data: {productId: productId},
-                            success: function (response) {
-                                if (response.success) {
-                                    // Xóa sản phẩm khỏi giao diện
-                                    productDiv.remove();
-                                    alert("Delete successful");
-                                } else {
-                                    alert("Delete failed");
-                                }
-                            },
-                            error: function () {
-                                alert("An error occurred while communicating with the server.");
-                            }
-                        });
-                    }
+                    productDiv.remove();
+
+                    swal("Delete Successful", {
+                        icon: "success",
+                    });
+
+                    // ... AJAX request to delete product ...
                 });
             });
+
         </script>
     </head>
     <body>
-        <div class="product">
-            <span class="product-name">Product 1</span>
-            <span class="product-price">$100</span>
-            <button class="delete-button" data-product-id="1">Delete</button>
-        </div>
-        <div class="product">
-            <span class="product-name">Product 2</span>
-            <span class="product-price">$150</span>
-            <button class="delete-button" data-product-id="2">Delete</button>
-        </div>
-
-        <!-- Nút để mở cửa sổ modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Open Modal
-        </button>
-
-        <!-- Cửa sổ modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Do You Want To Logout?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Logout</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <table>
+            <tr class="product">
+                <td class="product-name">Product A</td>
+                <td class="product-price">$25.99</td>
+                <td><button class="delete-button" data-product-id="1">Delete</button></td>
+            </tr>
+            <tr class="product">
+                <td class="product-name">Product A</td>
+                <td class="product-price">$25.99</td>
+                <td><button class="delete-button" data-product-id="1">Delete</button></td>
+            </tr>
+            <tr class="product">
+                <td class="product-name">Product A</td>
+                <td class="product-price">$25.99</td>
+                <td><button class="delete-button" data-product-id="1">Delete</button></td>
+            </tr>
+            <tr class="product">
+                <td class="product-name">Product A</td>
+                <td class="product-price">$25.99</td>
+                <td><button class="delete-button" data-product-id="1">Delete</button></td>
+            </tr>
+            <!-- ... other products ... -->
+            <tr>
+                <td>Total Price:<span style="margin-left: 1rem" id="total-price">$100.00</span></td>
+            </tr>
+        </table>
     </body>
 </html>
