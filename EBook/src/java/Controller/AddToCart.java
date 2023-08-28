@@ -4,6 +4,10 @@
  */
 package Controller;
 
+import DAO.BookDAOImpl;
+import DAO.CartDAOImpl;
+import Model.Book;
+import Model.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +41,7 @@ public class AddToCart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddToCart</title>");            
+            out.println("<title>Servlet AddToCart</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddToCart at " + request.getContextPath() + "</h1>");
@@ -57,7 +62,43 @@ public class AddToCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        try {
+            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+
+            int bid = Integer.parseInt(request.getParameter("bid"));
+            int uid = Integer.parseInt(request.getParameter("uid"));
+
+            BookDAOImpl dao = new BookDAOImpl();
+            Book book = dao.getBookById(bid);
+
+            Cart cart = new Cart();
+            cart.setBid(bid);
+            cart.setUserid(uid);
+            cart.setBookName(book.getBookName());
+            cart.setAuthor(book.getAuthor());
+            cart.setPrice(Double.parseDouble(book.getPrice()));
+            cart.setTotalPrice(Double.parseDouble(book.getPrice()));
+
+            CartDAOImpl dao_cart = new CartDAOImpl();
+            boolean f = dao_cart.addCart(cart);
+
+            HttpSession session = request.getSession();
+            url += "/View/all_new_book.jsp";
+
+            if (f) {
+                session.setAttribute("addCart", "Book Added To Cart");
+                response.sendRedirect(url);
+
+            } else {
+                session.setAttribute("failed", "Somthing Wrong On Server");
+                response.sendRedirect(url);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

@@ -3,12 +3,21 @@
     Created on : Aug 24, 2023, 4:51:06 AM
     Author     : ADMIN
 --%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.CartDAOImpl"%>
+<%@page import="Model.Cart"%>
+<%@page import="java.util.List"%>
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
+<%
+    List<Cart> list_cart = new ArrayList<Cart>();
+    CartDAOImpl dao_cart = new CartDAOImpl();
+    list_cart = dao_cart.getAllCart();
+%>
 <!DOCTYPE html>
 <html>
     <head>

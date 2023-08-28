@@ -1,12 +1,31 @@
 
+<%@page import="Model.User"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Cart"%>
+<%@page import="DAO.CartDAOImpl"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
+
 
 <div class="container-fluid" style="height: 10px; background-color: #303f9f">
 
 </div>
+<%
+    User user = (User) session.getAttribute("userObj");
 
+%>
 
+<%    List<Cart> list_cart = new ArrayList<Cart>();
+    CartDAOImpl dao_cart = new CartDAOImpl();
+    if (user == null) {
+        list_cart = dao_cart.getAllCartByIdUser(0);
+
+    } else {
+        list_cart = dao_cart.getAllCartByIdUser(user.getId());
+
+    }
+%>
 
 <div class="container-fluid p-3">
     <div class="row">
@@ -22,6 +41,15 @@
         <div class="col-md-3 text-center">
 
             <c:if test="${not empty userObj}">
+                <a href="<%=url%>/View/cart.jsp"">
+                    <i class="fas fa-shopping-cart align-middle  " style="margin-right: 3%;  font-size: 28px; color:blue">
+                        <p class="badge badge-secondary align-middle text-center px-1" style="color:red; background-color:
+                           #ff0000;color: #ffffff;font-size: 13px;  margin:auto">
+                            <%=list_cart.size()%>
+                        </p>
+                    </i> 
+                </a>
+
                 <a href="" class="btn btn-success"><i class="fa-solid fa-user" style="margin-right: 0.3rem"></i>${userObj.name}</a>
                 <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket" style="margin-right: 0.3rem"></i>Logout</a>
 

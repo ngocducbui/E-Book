@@ -4,6 +4,9 @@
     Author     : ADMIN
 --%>
 
+<%@page import="DAO.CartDAOImpl"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Cart"%>
 <%@page import="Model.User"%>
 <%@page import="Model.Book"%>
 <%@page import="java.util.List"%>
@@ -12,6 +15,8 @@
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,12 +29,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
         <script>
 
             window.onload = function () {
                 // Kiểm tra xem có thuộc tính thành công hay không
-                var logout = null;
+                logout=false;
                 var logout = <%= request.getAttribute("logout")%>;
 
                 if (logout) {
@@ -37,6 +41,7 @@
                     swal("Congratulations. You have successfully logged out", {
                         icon: "success",
                     });
+                    
                 }
             };
 
@@ -44,10 +49,8 @@
     </head>
     <body style="background-color:#f7f7f7 ">
 
+       
         <%@include file= "View/navbar.jsp"%>
-        <%
-            User user = (User) session.getAttribute("userObj");
-        %>
 
 
         <div class="container-fluid back-img content justify-content-center">
@@ -76,11 +79,11 @@
                                 <%
                                     if (user == null) {
                                 %>
-                                <a href="<%=url%>/View/login.jsp" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <a  href="<%=url%>/View/login.jsp" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
                                 <%
                                 } else {
                                 %>
-                                <a href="AddToCart" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <a href="AddToCart?bid=<%=book.getBookId()%>&&uid=<%=user.getId()%>" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
                                 <%
                                     }
                                 %>

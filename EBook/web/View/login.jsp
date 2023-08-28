@@ -3,12 +3,15 @@
     Created on : Aug 23, 2023, 11:12:01 PM
     Author     : ADMIN
 --%>
+<%@page import="Model.User"%>
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
