@@ -27,16 +27,16 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
-    <body>
+    <body style="background-color: #f0f1f2">
 
         <c:if test="${not empty addCart}">
             <script>
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'bottom-start', // Đổi vị trí hiển thị ở góc dưới bên trái
                     title: 'Add to cart successfully',
                     showConfirmButton: false,
                     timer: 1500
-                })
+                });
             </script>
             <c:remove var="addCart" scope="session" />
 
@@ -46,8 +46,7 @@
 
         <div class="container">
             <div class="row">
-                <%
-                    BookDAOImpl dao = new BookDAOImpl();
+                <%                    BookDAOImpl dao = new BookDAOImpl();
                     List<Book> list_re = dao.getAllNewBook();
                     for (Book book : list_re) {
                 %>

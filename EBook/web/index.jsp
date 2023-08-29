@@ -22,7 +22,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>EBook: Home</title>
-        <link rel="icon" type="image/jpg" sizes="16x16" href="book/316177185_1522790028184698_4331292790512062342_n.jpg">
+        <link rel="icon" type="image/png" sizes="32x32" href="book/132332687_1877481222429292_8982841910306197256_o.jpg">
 
         <link  type="text/css" rel="stylesheet" href="<%=url%>/CSS/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />

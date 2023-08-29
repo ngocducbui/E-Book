@@ -15,94 +15,55 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" type="image/png" sizes="32x32"  class="rotate-icon" href="book/132332687_1877481222429292_8982841910306197256_o.jpg">
+        <link rel="icon" type="image/png" sizes="32x32" href="book/132332687_1877481222429292_8982841910306197256_o.jpg">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <style>
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
 
-            .rotate-icon {
-                animation: spin 2s linear infinite;
-            }
-        </style>
-        <script>
-
-
-            const iconLink = document.querySelector('link[rel="icon"]');
-
-// Thêm class rotate-icon để bắt đầu hoạt hình
-            iconLink.classList.add('rotate-icon');
-
-// Đợi một khoảng thời gian sau đó xoá class để dừng hoạt hình
-            setTimeout(() => {
-                iconLink.classList.remove('rotate-icon');
-            }, 5000); // Thời gian hoạt hình (ms)
-
-
-        </script>
 
     </head>
     <body>
 
+        <button id="addToCartBtn">Thêm vào giỏ hàng</button>
+        <div id="cartItemCount">Số lượng trong giỏ hàng: 0</div>
 
-
-
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Tên</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>Người 1</td>
-                    <td><button onclick="deleteRow(this)">Xoá</button></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Người 2</td>
-                    <td><button onclick="deleteRow(this)">Xoá</button></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Người 3</td>
-                    <td><button onclick="deleteRow(this)">Xoá</button></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Người 3</td>
-                    <td><button onclick="deleteRow(this)">Xoá</button></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Người 3</td>
-                    <td><button onclick="deleteRow(this)">Xoá</button></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Người 3</td>
-                    <td><button onclick="deleteRow(this)">Xoá</button></td>
-                </tr>
-
-            </tbody>
-        </table>
-
-
-
-
+        <script>
+            $(document).ready(function () {
+                $("#addToCartBtn").click(function () {
+                    // Gửi yêu cầu POST tới servlet khi người dùng nhấn nút
+                    $.ajax({
+                        type: "POST",
+                        url: "duc2",
+                        data: {
+                            productId: "product123" // Thay thế bằng mã sản phẩm thực tế
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                alert("Thêm sản phẩm thành công!");
+                                // Cập nhật số lượng sản phẩm trong giỏ hàng
+                                updateCartItemCount();
+                            } else {
+                                alert("Thêm sản phẩm thất bại.");
+                            }
+                        },
+                        error: function () {
+                            alert("Lỗi trong quá trình xử lý yêu cầu.");
+                        }
+                    });
+                });
+                function updateCartItemCount() {
+                    // Cập nhật số lượng sản phẩm trong giỏ hàng
+                    // Lấy dữ liệu từ session hoặc cơ sở dữ liệu và cập nhật số lượng
+                    var itemCount = 10; // Thay thế bằng số lượng thực tế
+                    $("#cartItemCount").text("Số lượng trong giỏ hàng: " + itemCount);
+                }
+            });
+        </script>
     </body>
 </html>

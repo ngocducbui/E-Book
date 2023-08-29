@@ -34,43 +34,13 @@
                 });
             }
 
-//            $(document).ready(function () {
-//                $(".delete-button").click(function () {
-//                    var productDiv = $(this).closest(".product");
-//                    var productName = productDiv.find(".product-name").text();
-//                    var productId = $(this).data("product-id");
-//
-//
-//
-//                    // Thực hiện AJAX để xóa sản phẩm
-//                    $.ajax({
-//                        type: "POST",
-//                        url: "http://localhost:8080/EBook/DeleteCart",
-//                        data: {productId: productId},
-//                        success: function (response) {
-//                            if (response.success) {
-//                                // Xóa sản phẩm khỏi giao diện
-//                                productDiv.remove();
-//
-//                                var productDiv2 = $(this).closest(".product");
-//                                var productPrice = parseFloat(productDiv2.find(".product-price").text().substring(1));
-//                                var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
-//                                var newTotalPrice = currentTotalPrice - productPrice;
-//                                $("#total-price").text("$" + newTotalPrice.toFixed(2));
-//
-//                                swal("Delete Successful", {
-//                                    icon: "success",
-//                                });
-//                            } else {
-//                                swal("Delete failed. Please try again later!");
-//                            }
-//                        },
-//                        error: function () {
-//                            swal("An error occurred while communicating with the server.");
-//                        }
-//                    });
-//                });
-//            });
+            function updateCartCount() {
+                const totalCartLink = document.getElementById("total-cart");
+                let currentValue = parseInt(totalCartLink.textContent, 10);
+                currentValue--;
+                totalCartLink.textContent = currentValue;
+
+            }
             $(document).ready(function () {
                 $(".delete-button").click(function () {
                     var productDiv = $(this).closest(".product");
@@ -91,6 +61,7 @@
                                 // Xóa sản phẩm khỏi giao diện
                                 productDiv.remove();
                                 updateRowNumbers();
+                                updateCartCount();
 //                                var productDiv2 = $(this).closest(".product");
 //                                var productPrice = parseFloat(productDiv2.find(".product-price").text().substring(1));
 //                                var currentTotalPrice = parseFloat($("#total-price").text().substring(1));
@@ -123,7 +94,11 @@
     </head>
     <body style="background-color: #f0f1f2">
 
+
         <%@include file= "navbar.jsp"%>
+        <%            list_cart = dao_cart.getAllCartByIdUser(0);
+        %>
+
         <c:if test="${empty userObj}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>

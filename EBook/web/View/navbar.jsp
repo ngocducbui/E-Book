@@ -44,7 +44,7 @@
                 <a href="<%=url%>/View/cart.jsp"">
                     <i class="fas fa-shopping-cart align-middle  " style="margin-right: 3%;  font-size: 28px; color:blue">
                         <p class="badge badge-secondary align-middle text-center px-1" style="color:red; background-color:
-                           #ff0000;color: #ffffff;font-size: 13px;  margin:auto">
+                           #ff0000;color: #ffffff;font-size: 13px;  margin:auto" id="total-cart">
                             <%=list_cart.size()%>
                         </p>
                     </i> 

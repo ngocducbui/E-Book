@@ -5,6 +5,8 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,7 +63,43 @@ public class duc2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String productId = request.getParameter("productId");
+
+        // Thêm sản phẩm vào giỏ hàng của người dùng (có thể lưu vào session hoặc cơ sở dữ liệu)
+        // ... Thêm logic xử lý thêm sản phẩm vào giỏ hàng ...
+        // Trả về phản hồi cho front-end
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        JSONObject jsonResponse = new JSONObject();
+        try {
+            jsonResponse.put("success", true);
+        } catch (JSONException ex) {
+            Logger.getLogger(duc2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        out.print(jsonResponse.toString());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String productId = request.getParameter("productId");
+
+        // Thêm sản phẩm vào giỏ hàng của người dùng (có thể lưu vào session hoặc cơ sở dữ liệu)
+        // ... Thêm logic xử lý thêm sản phẩm vào giỏ hàng ...
+        // Trả về phản hồi cho front-end
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        JSONObject jsonResponse = new JSONObject();
+        try {
+            jsonResponse.put("success", true);
+        } catch (JSONException ex) {
+            Logger.getLogger(duc2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        out.print(jsonResponse.toString());
     }
 
     /**
@@ -72,37 +111,7 @@ public class duc2 extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String productId = request.getParameter("productId");
-
-        // Thực hiện xóa dữ liệu sản phẩm dựa trên productId
-        // ... (viết mã xóa sản phẩm ở đây)
-        // Gửi phản hồi về client
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        JSONObject jsonResponse = new JSONObject();
-        try {
-            jsonResponse.put("success", true); // Hoặc false nếu xóa không thành công
-        } catch (JSONException ex) {
-            Logger.getLogger(duc2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        PrintWriter out = response.getWriter();
-        out.print(jsonResponse.toString());
-        out.flush();
-    }
-
-
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

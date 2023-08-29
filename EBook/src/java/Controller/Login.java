@@ -95,10 +95,12 @@ public class Login extends HttpServlet {
             } else {
                 User user = dao.login(email, password);
                 if (user != null) {
+                    session.setMaxInactiveInterval(1800);
                     session.setAttribute("userObj", user);
                     url += "/index.jsp";
                     response.sendRedirect(url);
                 } else {
+                    session.setMaxInactiveInterval(1800);
                     session.setAttribute("failedMsg", "Email or Password is incorrect");
                     url += "/View/login.jsp";
                     response.sendRedirect(url);
