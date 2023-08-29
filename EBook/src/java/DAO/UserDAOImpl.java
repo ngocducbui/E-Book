@@ -5,6 +5,7 @@
 package DAO;
 
 import Database.DBConnection;
+import Model.Book;
 import Model.User;
 import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.Connection;
@@ -71,6 +72,39 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public User getUserById(int id) {
+
+        User user = null;
+        Connection con = DBConnection.getConnection();
+        try {
+
+            String sql = "select * from user where id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt(1));
+                user.setName(rs.getString(2));
+                user.setEmail(rs.getString(3));
+                user.setPhno(rs.getString(4));
+                user.setPassword(rs.getString(5));
+                user.setAddress(rs.getString(6));
+                user.setLandmark(rs.getString(7));
+                user.setCity(rs.getString(8));
+                user.setState(rs.getString(9));
+                user.setPinc(rs.getString(10));
+            }
+            DBConnection.closeConnection(con);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+
     }
 
 }

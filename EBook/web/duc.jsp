@@ -25,45 +25,78 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
 
+            .sidebar {
+                width: 250px;
+                height: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: #333;
+                color: #fff;
+            }
+
+            .sidebar-item {
+                display: block;
+                padding: 15px;
+                cursor: pointer;
+                border: none;
+                background: none;
+                color: inherit;
+            }
+
+            .content {
+                margin-left: 260px; /* Để chừa không gian cho sidebar */
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-left: 1px solid #ddd;
+            }
+
+
+        </style>
+        <script>
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            const contents = document.querySelectorAll('.content');
+
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const targetContentId = item.getAttribute('data-target');
+                    contents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(targetContentId).style.display = 'block';
+                });
+            });
+
+        </script>
     </head>
     <body>
 
-        <button id="addToCartBtn">Thêm vào giỏ hàng</button>
-        <div id="cartItemCount">Số lượng trong giỏ hàng: 0</div>
+        <div class="sidebar">
+            <button class="sidebar-item" data-target="content1">Mục 1</button>
+            <button class="sidebar-item" data-target="content2">Mục 2</button>
+            <button class="sidebar-item" data-target="content3">Mục 3</button>
+        </div>
 
-        <script>
-            $(document).ready(function () {
-                $("#addToCartBtn").click(function () {
-                    // Gửi yêu cầu POST tới servlet khi người dùng nhấn nút
-                    $.ajax({
-                        type: "POST",
-                        url: "duc2",
-                        data: {
-                            productId: "product123" // Thay thế bằng mã sản phẩm thực tế
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            if (response.success) {
-                                alert("Thêm sản phẩm thành công!");
-                                // Cập nhật số lượng sản phẩm trong giỏ hàng
-                                updateCartItemCount();
-                            } else {
-                                alert("Thêm sản phẩm thất bại.");
-                            }
-                        },
-                        error: function () {
-                            alert("Lỗi trong quá trình xử lý yêu cầu.");
-                        }
-                    });
-                });
-                function updateCartItemCount() {
-                    // Cập nhật số lượng sản phẩm trong giỏ hàng
-                    // Lấy dữ liệu từ session hoặc cơ sở dữ liệu và cập nhật số lượng
-                    var itemCount = 10; // Thay thế bằng số lượng thực tế
-                    $("#cartItemCount").text("Số lượng trong giỏ hàng: " + itemCount);
-                }
-            });
-        </script>
+        <div class="content" id="content1">
+            Nội dung mục 1
+        </div>
+
+        <div class="content" id="content2">
+            Nội dung mục 2
+        </div>
+
+        <div class="content" id="content3">
+            Nội dung mục 3
+        </div>
+
+
+
     </body>
 </html>

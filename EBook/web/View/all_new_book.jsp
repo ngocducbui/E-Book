@@ -29,18 +29,7 @@
     </head>
     <body style="background-color: #f0f1f2">
 
-        <c:if test="${not empty addCart}">
-            <script>
-                Swal.fire({
-                    position: 'bottom-start', // Đổi vị trí hiển thị ở góc dưới bên trái
-                    title: 'Add to cart successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            </script>
-            <c:remove var="addCart" scope="session" />
-
-        </c:if>
+       
 
         <%@include file= "navbar.jsp"%>
 

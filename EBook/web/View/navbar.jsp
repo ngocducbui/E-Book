@@ -16,7 +16,8 @@
 
 %>
 
-<%    List<Cart> list_cart = new ArrayList<Cart>();
+<%    
+    List<Cart> list_cart = new ArrayList<Cart>();
     CartDAOImpl dao_cart = new CartDAOImpl();
     if (user == null) {
         list_cart = dao_cart.getAllCartByIdUser(0);
@@ -120,8 +121,8 @@
 
             </ul>
             <form class="d-flex">
-                <button class="btn btn-light" style="margin-right: 0.5rem" type="submit"><i class="fa-solid fa-gear" style="margin-right: 0.3rem"></i>Setting</button>
-                <button class="btn btn-light" type="submit"><i class="fa-solid fa-phone" style="margin-right: 0.3rem"></i>Contact Us</button>
+                <a href="<%=url%>/View/setting.jsp" class="btn btn-light" style="margin-right: 0.5rem" type="submit"><i class="fa-solid fa-gear" style="margin-right: 0.3rem"></i>Setting</a>
+                <a class="btn btn-light" type="submit"><i class="fa-solid fa-phone" style="margin-right: 0.3rem"></i>Contact Us</a>
             </form>
             <a href="<%=url%>/duc.jsp">hiiiiiii</a>
         </div>
