@@ -10,12 +10,16 @@ import Model.Book;
 import Model.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -85,7 +89,6 @@ public class AddToCart extends HttpServlet {
 
             HttpSession session = request.getSession();
             url += "/View/all_new_book.jsp";
-
             if (f) {
                 session.setAttribute("addCart", "Book Added To Cart");
                 response.sendRedirect(url);
@@ -94,11 +97,9 @@ public class AddToCart extends HttpServlet {
                 session.setAttribute("failed", "Somthing Wrong On Server");
                 response.sendRedirect(url);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -112,7 +113,46 @@ public class AddToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+
+        BookDAOImpl dao = new BookDAOImpl();
+        Book book = dao.getBookById(productId);
+
+        Cart cart = new Cart();
+        cart.setBid(productId);
+        cart.setUserid(userId);
+        cart.setBookName(book.getBookName());
+        cart.setAuthor(book.getAuthor());
+        cart.setPrice(Double.parseDouble(book.getPrice()));
+        cart.setTotalPrice(Double.parseDouble(book.getPrice()));
+
+        CartDAOImpl dao_cart = new CartDAOImpl();
+        boolean f = dao_cart.addCart(cart);
+
+        HttpSession session = request.getSession();
+//        url += "/View/all_new_book.jsp";
+        if (f) {
+            session.setAttribute("addCart", "Book Added To Cart");
+//            response.sendRedirect(url);
+
+        } else {
+            session.setAttribute("failed", "Somthing Wrong On Server");
+//            response.sendRedirect(url);
+        }
+
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        JSONObject jsonResponse = new JSONObject();
+        try {
+            jsonResponse.put("success", true);
+        } catch (JSONException ex) {
+            Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        out.print(jsonResponse.toString());
+
     }
 
     /**

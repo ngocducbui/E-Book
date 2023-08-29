@@ -15,7 +15,8 @@
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,27 +30,98 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
 
-            window.onload = function () {
-                // Kiểm tra xem có thuộc tính thành công hay không
-                logout = false;
-                var logout = <%= request.getAttribute("logout")%>;
+//            window.onload = function () {
+//                // Kiểm tra xem có thuộc tính thành công hay không
+//                logout = false;
+//                var logout = <%= request.getAttribute("logout")%>;
+//
+//                if (logout) {
+//
+//                    Swal.fire({
+//                        icon: 'success',
+//                        title: 'You Have Successfully\n\
+//             Logged Out!',
+//                        showConfirmButton: false,
+//                        timer: 1500
+//                    }
+//                    )
+//                }
+//            };
 
-                if (logout) {
-                    // Hiển thị pop-up thông báo thành công
-                    swal("Congratulations. You have successfully logged out", {
-                        icon: "success",
+            $(document).ready(function () {
+                $(".addToCartBtn").click(function (event) {
+                    event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+                    var productId = $(this).data("productid"); // Lấy productId từ thuộc tính data-productid
+                    var userId = $(this).data("userid"); // Lấy userId từ thuộc tính data-userid
+
+                    // Gửi yêu cầu POST tới servlet khi người dùng nhấn nút
+                    $.ajax({
+                        type: "POST",
+                        url: "AddToCart",
+                        data: {
+                            productId: productId,
+                            userId: userId
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thêm sản phẩm thành công!',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+                                updateCartCount();
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Thêm sản phẩm thất bại.',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+                            }
+                        },
+                        error: function () {
+                            alert("Lỗi trong quá trình xử lý yêu cầu.");
+                        }
                     });
+                });
+
+                function updateCartCount() {
+                    const totalCartLink = document.getElementById("total-cart");
+                    let currentValue = parseInt(totalCartLink.textContent, 10);
+                    currentValue++;
+                    totalCartLink.textContent = currentValue;
 
                 }
-            };
+            });
 
         </script>
     </head>
     <body style="background-color:#f7f7f7 ">
+
+
+
+        <c:if test="${not empty logout}">
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'You Have Successfully\n\
+             Logged Out!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }
+                );
+            </script>
+            <c:remove var="logout" scope="session" />
+
+        </c:if>
 
 
         <%@include file= "View/navbar.jsp"%>
@@ -84,7 +156,8 @@
                                 <%
                                 } else {
                                 %>
-                                <a href="AddToCart?bid=<%=book.getBookId()%>&&uid=<%=user.getId()%>" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+<!--                                <a href="AddToCart?bid=<%=book.getBookId()%>&&uid=<%=user.getId()%>" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>-->
+                                <a href="#" class="btn btn-danger btn-sm col-md-4 addToCartBtn" data-productid="<%=book.getBookId()%>" data-userid="<%=user.getId()%>"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
                                 <%
                                     }
                                 %>

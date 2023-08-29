@@ -42,7 +42,8 @@
 
             }
             $(document).ready(function () {
-                $(".delete-button").click(function () {
+                $(".delete-button").click(function (event) {
+                    event.preventDefault();
                     var productDiv = $(this).closest(".product");
                     var productPrice = parseFloat(productDiv.find(".product-price").text().substring(1));
                     var currentTotalPrice = parseFloat($("#total-price").text().substring(1));

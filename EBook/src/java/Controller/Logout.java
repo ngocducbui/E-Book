@@ -62,13 +62,17 @@ public class Logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try {
+            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+
             HttpSession session = request.getSession();
+            session.setAttribute("logout", "success");
+
             session.removeAttribute("userObj");
             session.removeAttribute("adminObj");
 
-            request.setAttribute("logout", true);
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
+            // request.setAttribute("logout", true);
+            url+="/index.jsp";
+            response.sendRedirect(url);
         } catch (Exception e) {
             e.printStackTrace();
         }

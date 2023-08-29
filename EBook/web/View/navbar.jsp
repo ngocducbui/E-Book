@@ -30,7 +30,10 @@
 <div class="container-fluid p-3">
     <div class="row">
         <div class="col-md-3 text-center text-success">
-            <h3> <i class="fa-solid fa-book" style=" margin-right: 2%"></i>Ebooks</h3>
+            <a href="<%=url%>/index.jsp" style="text-decoration: none">
+
+                <h3> <i class="fa-solid fa-book" style=" margin-right: 2%"></i>Ebooks</h3>
+            </a>
         </div>
         <div class="col-md-6">
             <form class="d-flex" role="search" style="max-width: 80%; margin:auto">
