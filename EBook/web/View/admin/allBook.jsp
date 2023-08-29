@@ -109,7 +109,6 @@
     <body style="background-color: #f0f2f2">
 
 
-        <div class="overlay_all" id="overlay"></div>
 
         <%@include file= "navbar.jsp"%>
 
@@ -138,12 +137,12 @@
 
 
 
-        <h3 class="text-center mt-2">All Book</h3>
+        <h3 class="text-center mt-3 mb-3">All Book</h3>
 
 
-        <table class="table table-striped ">
+        <table class="table align-middle ">
             <thead class="table-dark">
-                <tr>
+                <tr class="table-primary">
                     <th scope="col">Id</th>
                     <th scope="col">Image</th>
                     <th scope="col">Book Name</th>
@@ -172,15 +171,15 @@
                         String status = b.getStatus();
                         if (status.equals("Active")) {
                     %>
-                    <td style="color: #22bf76"><%=b.getStatus()%></td>
+                    <td ><span class="badge bg-success"><%=b.getStatus()%></span></td>
 
                     <%
                     } else {
                     %>
-                    <td style="color: red"><%=b.getStatus()%></td>
-                    <%
-                        }
-                    %>
+                    <td ><span class="badge bg-danger"><%=b.getStatus()%></span></td>
+                        <%
+                            }
+                        %>
                     <td style="display: none;"><%=b.getPhotoName()%></td>
 
                     <td>

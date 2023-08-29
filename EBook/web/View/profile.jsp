@@ -38,6 +38,9 @@
                     }
                 });
             });
+            function goBack() {
+                window.history.back();
+            }
         </script>
     </head>
     <body style="background-color: #f0f1f2">
@@ -73,72 +76,74 @@
                 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
                     <div class="card h-100">
                         <div class="card-body ">
-                            <div class="row gutters mt-1">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
-                                    <h6 class="mb-2 text-primary">Personal Details</h6>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="fullName" class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user_edit.getName()%>">
+                            <form action="/EBook/UpdateProfile" action="post">
+                                <div class="row gutters mt-1">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                        <h6 class="mb-2 text-primary">Personal Details</h6>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="fullName" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user_edit.getName()%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="eMail" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="eMail" placeholder="Enter email ID" value="<%=user_edit.getEmail()%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="phone" class="form-label">Phone</label>
+                                            <input type="text" class="form-control" id="phone" placeholder="Enter phone number" value="<%=user_edit.getPhno()%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="website" class="form-label">Website URL</label>
+                                            <input type="url" class="form-control" id="website" placeholder="Website url">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="eMail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="eMail" placeholder="Enter email ID" value="<%=user_edit.getEmail()%>">
+                                <div class="row gutters mt-1">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="Street" class="form-label">Street</label>
+                                            <input type="name" class="form-control" id="Street" placeholder="Enter Street" value="<%=user_edit.getLandmark()%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="ciTy" class="form-label">City</label>
+                                            <input type="name" class="form-control" id="ciTy" placeholder="Enter City" value="<%=user_edit.getCity()%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="sTate" class="form-label">State</label>
+                                            <input type="text" class="form-control" id="sTate" placeholder="Enter State" value="<%=user_edit.getState()%>">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group mb-3">
+                                            <label for="zIp" class="form-label">Zip Code</label>
+                                            <input type="text" class="form-control" id="zIp" placeholder="Zip Code" value="<%=user_edit.getPinc()%>">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="phone" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" id="phone" placeholder="Enter phone number" value="<%=user_edit.getPhno()%>">
+                                <div class="row gutters mt-4">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="text-end">
+                                            <a class="btn btn-secondary" onclick="goBack()">Cancel</a>
+                                            <button type="submit" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="website" class="form-label">Website URL</label>
-                                        <input type="url" class="form-control" id="website" placeholder="Website url">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gutters mt-1">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                                    <h6 class="mt-3 mb-2 text-primary">Address</h6>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="Street" class="form-label">Street</label>
-                                        <input type="name" class="form-control" id="Street" placeholder="Enter Street" value="<%=user_edit.getLandmark()%>">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="ciTy" class="form-label">City</label>
-                                        <input type="name" class="form-control" id="ciTy" placeholder="Enter City" value="<%=user_edit.getCity()%>">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="sTate" class="form-label">State</label>
-                                        <input type="text" class="form-control" id="sTate" placeholder="Enter State" value="<%=user_edit.getState()%>">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="zIp" class="form-label">Zip Code</label>
-                                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code" value="<%=user_edit.getPinc()%>">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gutters mt-4">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <div class="text-end">
-                                        <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-                                        <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

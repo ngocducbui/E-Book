@@ -32,7 +32,26 @@
     </head>
     <body>
         <%@include file= "navbar.jsp"%>
+        <c:if test="${empty adminObj}">
+            <c:if test="${empty userObj}">
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+                <script>
+                    swal("Delete Successful", {
+                        icon: "success",
+                    });
+                    // $('#accessDeniedModal').modal('show');
+                    window.location.href = '../login.jsp';
+
+                </script>
+            </c:if>
+            <c:if test="${not empty userObj}">
+                <script>
+                    //   $('#permissionDeniedModal').modal('show');
+                    window.location.href = '<%=url%>/index.jsp';
+                </script>
+            </c:if>
+        </c:if>
         <div class="container">
             <div class="row p-5">
                 <div class="col-md-3">

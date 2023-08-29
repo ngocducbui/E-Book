@@ -139,7 +139,7 @@ public class AddBook extends HttpServlet {
                 HttpSession session = request.getSession();
 
                 url += "/View/admin/addBook.jsp";
-                if (true) {
+                if (f) {
                     String path = getServletContext().getRealPath("") + "book";
                     String path_new = path.replace(String.valueOf("\\build"), "");
                     File file = new File(path);
