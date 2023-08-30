@@ -128,7 +128,7 @@
 
 
 
-        <div class="container-fluid back-img content justify-content-center" style="margin-top: 90px">
+        <div class="container-fluid back-img content justify-content-center" style="margin-top: 130px">
             <h2 class="text-center text-danger" style="z-index: 100">  EBook Management System</h2>
 
             <div class="overlay"></div>

@@ -24,7 +24,7 @@
     <body style="background-color: #f0f1f2">
         <%@include file= "navbar.jsp"%>
         <div class="container p-2">
-            <div class="row mt-2">
+            <div class="row mt-2" style="padding-top: 160px; padding-bottom: 20px">
                 <div class="col-md-4 offset-md-4">
                     <div class="card">
                         <div class="card-body ">
