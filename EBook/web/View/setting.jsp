@@ -41,13 +41,13 @@
         <%@include file= "navbar.jsp"%>
 
         <c:if test="${ empty userObj}">
-                <script>
-                    //   $('#permissionDeniedModal').modal('show');
-                    window.location.href = '<%=url%>/View/login.jsp';
-                </script>
-            </c:if>
+            <script>
+                //   $('#permissionDeniedModal').modal('show');
+                window.location.href = '<%=url%>/View/login.jsp';
+            </script>
+        </c:if>
         <div class="container">
-            <h2 class="text-center mt-3">Hello, Ngoc Duc</h2>
+            <h2 class="text-center mt-3">Hello, ${userObj.name}</h2>
             <div class="row p-5">
                 <div class="col-md-6">
                     <a href="sell_book.jsp">

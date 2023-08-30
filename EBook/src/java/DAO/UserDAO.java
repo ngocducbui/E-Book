@@ -14,4 +14,5 @@ public interface UserDAO {
     public boolean userRegister(User user);
     public User login(String email, String password);
     public User getUserById(int id);
+    public boolean updateUserById( User user);
 }

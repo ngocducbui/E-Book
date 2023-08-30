@@ -81,6 +81,7 @@ public class Login extends HttpServlet {
         try {
             UserDAOImpl dao = new UserDAOImpl();
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(1800);
 
             String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
             String email = request.getParameter("email");
@@ -95,7 +96,6 @@ public class Login extends HttpServlet {
             } else {
                 User user = dao.login(email, password);
                 if (user != null) {
-                    session.setMaxInactiveInterval(1800);
                     session.setAttribute("userObj", user);
                     url += "/index.jsp";
                     response.sendRedirect(url);

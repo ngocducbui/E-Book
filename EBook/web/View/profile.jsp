@@ -23,7 +23,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             $(document).ready(function () {
                 $('#avatar').click(function () {
@@ -45,38 +45,55 @@
     </head>
     <body style="background-color: #f0f1f2">
 
+        <c:if test="${not empty update}">
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'You Have Successfully Edited Your Psrofile!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }
+                );
+            </script>
+            <c:remove var="update" scope="session" />
+
+        </c:if>
+
+
         <%@include file= "navbar.jsp"%>
 
         <%            UserDAOImpl dao = new UserDAOImpl();
             User user_edit = dao.getUserById(user.getId());
         %>
         <div class="container mt-5">
-            <div class="row gutters">
-                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="account-settings">
-                                <div class="user-profile">
-                                    <div class="user-avatar mt-5">
-                                        <img id="avatar" src="../book/129846837_1513137549074595_6888598932010542259_o.jpg" alt="Maxwell Admin" style="cursor: pointer;">    
-                                        <input type="file" id="file-input" accept="image/*" style="display: none;">
+            <form action="/EBook/UpdateProfile" method="post" enctype="multipart/form-data">
 
+                <div class="row gutters">
+                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="account-settings">
+                                    <div class="user-profile">
+                                        <div class="user-avatar mt-5">
+                                            <img id="avatar" src="../user_img/<%=user_edit.getPhoto()%>" alt="Avatar" style="cursor: pointer;">    
+                                            <!--                                            <img id="avatar" src="../img/blank-profile-picture.png" alt="Maxwell Admin" style="cursor: pointer;">    -->
+                                            <input name="img" type="file" id="file-input" accept="image/*" style="display: none;">
+
+                                        </div>
+                                        <h5 class="user-name"><%=user_edit.getName()%></h5>
+                                        <h6 class="user-email"><%=user_edit.getEmail()%></h6>
                                     </div>
-                                    <h5 class="user-name"><%=user_edit.getName()%></h5>
-                                    <h6 class="user-email"><%=user_edit.getEmail()%></h6>
-                                </div>
-                                <div class="about mt-5">
-                                    <h5>About</h5>
-                                    <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
+                                    <div class="about mt-5">
+                                        <h5>About</h5>
+                                        <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                    <div class="card h-100">
-                        <div class="card-body ">
-                            <form action="/EBook/UpdateProfile" action="post">
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <div class="card-body ">
                                 <div class="row gutters mt-1">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
                                         <h6 class="mb-2 text-primary">Personal Details</h6>
@@ -84,25 +101,26 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="fullName" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user_edit.getName()%>">
+                                            <input name="name" type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user_edit.getName()%>">
+                                            <input name="id" type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user_edit.getId()%>" style="display:none">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="eMail" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="eMail" placeholder="Enter email ID" value="<%=user_edit.getEmail()%>">
+                                            <input name="email" type="email" class="form-control" id="eMail" placeholder="Enter email ID" value="<%=user_edit.getEmail()%>">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="phone" class="form-label">Phone</label>
-                                            <input type="text" class="form-control" id="phone" placeholder="Enter phone number" value="<%=user_edit.getPhno()%>">
+                                            <input name="phone" type="text" class="form-control" id="phone" placeholder="Enter phone number" value="<%=user_edit.getPhno()%>">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="website" class="form-label">Website URL</label>
-                                            <input type="url" class="form-control" id="website" placeholder="Website url">
+                                            <input name="web" type="url" class="form-control" id="website" placeholder="Website url">
                                         </div>
                                     </div>
                                 </div>
@@ -113,25 +131,25 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="Street" class="form-label">Street</label>
-                                            <input type="name" class="form-control" id="Street" placeholder="Enter Street" value="<%=user_edit.getLandmark()%>">
+                                            <input name="street" type="name" class="form-control" id="Street" placeholder="Enter Street" value="<%=user_edit.getLandmark()%>">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="ciTy" class="form-label">City</label>
-                                            <input type="name" class="form-control" id="ciTy" placeholder="Enter City" value="<%=user_edit.getCity()%>">
+                                            <input type="text" name="city" class="form-control" id="ciTy" placeholder="Enter City" value="<%=user_edit.getCity()%>">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="sTate" class="form-label">State</label>
-                                            <input type="text" class="form-control" id="sTate" placeholder="Enter State" value="<%=user_edit.getState()%>">
+                                            <input  name="state" type="text" class="form-control" id="sTate" placeholder="Enter State" value="<%=user_edit.getState()%>">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group mb-3">
                                             <label for="zIp" class="form-label">Zip Code</label>
-                                            <input type="text" class="form-control" id="zIp" placeholder="Zip Code" value="<%=user_edit.getPinc()%>">
+                                            <input name="zip" type="text" class="form-control" id="zIp" placeholder="Zip Code" value="<%=user_edit.getPinc()%>">
                                         </div>
                                     </div>
                                 </div>
@@ -143,13 +161,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>                                 
         </div>
-
-
     </body>
 </html>

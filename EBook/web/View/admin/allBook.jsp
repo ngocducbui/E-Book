@@ -108,6 +108,7 @@
     </head>
     <body style="background-color: #f0f2f2">
 
+        <div class="overlay_all" id="overlay"></div>
 
 
         <%@include file= "navbar.jsp"%>
@@ -297,10 +298,6 @@
                         <img id="anh" style="width: 120px; height: 150px">
                     </div>
                     <div class="form-group mb-3 ml-4 mt-auto justify-content-center">
-                        <%
-                            String path = getServletContext().getRealPath("") + "book";
-                            String path_new = path.replace(String.valueOf("\\build"), "");
-                        %>
                         <label  for="exampleInputImg" class="form-label">Upload Photo</label>
                         <input  name="img" type="file" class="form-control-file " id="exampleInputImg">
                     </div>
@@ -355,7 +352,6 @@
 
             {
                 if (event.target.classList.contains('edit')) {
-                    event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
 
                     // Xử lý sự kiện click cho thẻ <a> có class "edit" ở đây
                     document.querySelector(".popup2").classList.add("active");

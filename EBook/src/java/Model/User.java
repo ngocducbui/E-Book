@@ -20,11 +20,20 @@ public class User {
     private String city;
     private String state;
     private String pinc;
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public User() {
     }
 
-    public User(int id, String name, String email, String password, String phno, String address, String landmark, String city, String state, String pinc) {
+    public User(int id, String name, String email, String password, String phno, String address, String landmark, String city, String state, String pinc,String photo) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -35,6 +44,7 @@ public class User {
         this.city = city;
         this.state = state;
         this.pinc = pinc;
+        this.photo=photo;
     }
 
     public int getId() {

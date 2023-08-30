@@ -97,6 +97,8 @@ public class UserDAOImpl implements UserDAO {
                 user.setCity(rs.getString(8));
                 user.setState(rs.getString(9));
                 user.setPinc(rs.getString(10));
+                user.setPhoto(rs.getString(11));
+
             }
             DBConnection.closeConnection(con);
 
@@ -104,6 +106,40 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         }
         return user;
+
+    }
+
+    @Override
+    public boolean updateUserById(User user) {
+
+        boolean f = false;
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String sql = "UPDATE ebook.`user`\n"
+                    + "SET name=?, email=?, phno=?, address=?, landmark=?, city=?, state=?, pincode=?, photo=?\n"
+                    + "WHERE id=? ;";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPhno());
+            ps.setString(4, user.getAddress());
+            ps.setString(5, user.getLandmark());
+            ps.setString(6, user.getCity());
+            ps.setString(7, user.getState());
+            ps.setString(8, user.getPinc());
+            ps.setString(9, user.getPhoto());
+            ps.setInt(10, user.getId());
+            int i = ps.executeUpdate();
+            if (i == 1) {
+                f = true;
+            }
+            DBConnection.closeConnection(con);
+
+        } catch (Exception e) {
+        }
+        return f;
 
     }
 
