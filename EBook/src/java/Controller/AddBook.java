@@ -81,7 +81,6 @@ public class AddBook extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
         String formType = request.getParameter("formType");
         String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
@@ -153,7 +152,7 @@ public class AddBook extends HttpServlet {
 
             }
         } catch (Exception e) {
-            out.print(e.getMessage());
+            e.printStackTrace();
         }
 
     }

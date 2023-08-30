@@ -143,4 +143,36 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    public boolean updateUserByIdNoPhoto(User user) {
+
+        boolean f = false;
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String sql = "UPDATE ebook.`user`\n"
+                    + "SET name=?, email=?, phno=?, address=?, landmark=?, city=?, state=?, pincode=?\n"
+                    + "WHERE id=? ;";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPhno());
+            ps.setString(4, user.getAddress());
+            ps.setString(5, user.getLandmark());
+            ps.setString(6, user.getCity());
+            ps.setString(7, user.getState());
+            ps.setString(8, user.getPinc());
+            ps.setInt(9, user.getId());
+            int i = ps.executeUpdate();
+            if (i == 1) {
+                f = true;
+            }
+            DBConnection.closeConnection(con);
+
+        } catch (Exception e) {
+        }
+        return f;
+
+    }
+
 }

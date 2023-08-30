@@ -123,11 +123,12 @@
 
         </c:if>
 
+                <%@include file= "View/navbar.jsp"%>
 
-        <%@include file= "View/navbar.jsp"%>
 
 
-        <div class="container-fluid back-img content justify-content-center">
+
+        <div class="container-fluid back-img content justify-content-center" style="margin-top: 90px">
             <h2 class="text-center text-danger" style="z-index: 100">  EBook Management System</h2>
 
             <div class="overlay"></div>
@@ -196,7 +197,18 @@
                             <p><%=book.getAuthor()%></p>
                             <p>Category: <%=book.getBookCategory()%></p>
                             <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <%
+                                    if (user == null) {
+                                %>
+                                <a  href="<%=url%>/View/login.jsp" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <%
+                                } else {
+                                %>
+<!--                                <a href="AddToCart?bid=<%=book.getBookId()%>&&uid=<%=user.getId()%>" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>-->
+                                <a href="#" class="btn btn-danger btn-sm col-md-4 addToCartBtn" data-productid="<%=book.getBookId()%>" data-userid="<%=user.getId()%>"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <%
+                                    }
+                                %>
                                 <a href="<%=url%>/View/detail_book.jsp?bid=<%=book.getBookId()%>" class="btn btn-success btn-sm col-md-4">View Details</a>
                                 <a href="" class="btn btn-danger btn-sm col-md-3"><i class="fa-solid fa-dollar-sign" style="margin-right: 0.1rem"></i><%=book.getPrice()%></a>
                             </div>
@@ -236,9 +248,20 @@
                             <p><%=book.getAuthor()%></p>
                             <p>Category: <%=book.getBookCategory()%></p>
                             <div class="row text-center justify-content-between">
-                                <a href="" class="btn btn-danger btn-sm col-md-4 no-click"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <%
+                                    if (user == null) {
+                                %>
+                                <a  href="<%=url%>/View/login.jsp" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <%
+                                } else {
+                                %>
+<!--                                <a href="AddToCart?bid=<%=book.getBookId()%>&&uid=<%=user.getId()%>" class="btn btn-danger btn-sm col-md-4"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>-->
+                                <a href="#" class="btn btn-danger btn-sm col-md-4 addToCartBtn" data-productid="<%=book.getBookId()%>" data-userid="<%=user.getId()%>"><i class="fa-solid fa-cart-plus" style="margin-right: 0.3rem"></i>Add Cart</a>
+                                <%
+                                    }
+                                %>
                                 <a href="<%=url%>/View/detail_book.jsp?bid=<%=book.getBookId()%>" class="btn btn-success btn-sm col-md-4">View Details</a>
-                                <a href="" class="btn btn-danger btn-sm col-md-3 "><i class="fa-solid fa-dollar-sign" style="margin-right: 0.1rem; "></i><%=book.getPrice()%></a>
+                                <a href="" class="btn btn-danger btn-sm col-md-3"><i class="fa-solid fa-dollar-sign" style="margin-right: 0.1rem"></i><%=book.getPrice()%></a>
                             </div>
                         </div>
                     </div>

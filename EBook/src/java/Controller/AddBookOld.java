@@ -4,8 +4,8 @@
  */
 package Controller;
 
-import DAO.UserDAOImpl;
-import Model.User;
+import DAO.BookDAOImpl;
+import Model.Book;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,10 +22,10 @@ import javax.servlet.http.Part;
  *
  * @author ADMIN
  */
-@WebServlet(name = "UpdateProfile", urlPatterns = {"/UpdateProfile"})
+@WebServlet(name = "AddBookOld", urlPatterns = {"/AddBookOld"})
 @MultipartConfig
 
-public class UpdateProfile extends HttpServlet {
+public class AddBookOld extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +44,10 @@ public class UpdateProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateProfile</title>");
+            out.println("<title>Servlet AddBookOld</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateProfile at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddBookOld at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -81,53 +81,35 @@ public class UpdateProfile extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         try {
+            String bookName = request.getParameter("bookname");
+            String author = request.getParameter("author");
+            String price = request.getParameter("price");
+            String categories = "Old";
+            String status = "Active";
             Part part = request.getPart("img");
             String fileName = part.getSubmittedFileName();
-            int id = Integer.parseInt(request.getParameter("id"));
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String street = request.getParameter("street");
-            String city = request.getParameter("city");
-            String state = request.getParameter("state");
-            String zip = request.getParameter("zip");
 
-            User user = new User();
-            user.setId(id);
-            user.setName(name);
-            user.setEmail(email);
-            user.setPhno(phone);
-            user.setLandmark(street);
-            user.setCity(city);
-            user.setState(state);
-            user.setPhoto(fileName);
-            user.setPinc(zip);
+            String email = request.getParameter("user");
 
-            UserDAOImpl dao = new UserDAOImpl();
-            boolean f = false;
-            if (!fileName.equals("")) {
-                f = dao.updateUserById(user);
-            } else {
-                f = dao.updateUserByIdNoPhoto(user);
-            }
+            Book book = new Book(bookName, author, price, categories, status, fileName, email);
+
+            BookDAOImpl dao = new BookDAOImpl();
+            boolean f = dao.addBook(book);
+
             HttpSession session = request.getSession();
-            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
-            url += "/View/profile.jsp";
+            url += "/View/sell_book.jsp";
             if (f) {
-                if (!fileName.equals("")) {
-
-                    String path = getServletContext().getRealPath("") + "user_img";
-                    String path_new = path.replace(String.valueOf("\\build"), "");
-                    File file = new File(path);
-                    part.write(path_new + File.separator + fileName);
-                }
-                session.setAttribute("update", "success");
+                String path = getServletContext().getRealPath("") + "book";
+                String path_new = path.replace(String.valueOf("\\build"), "");
+                File file = new File(path);
+                part.write(path_new + File.separator + fileName);
+                session.setAttribute("successMsg", "Book Add Successfully.");
                 response.sendRedirect(url);
-
             } else {
-                session.setAttribute("updates", "not success!");
+                session.setAttribute("failedMsg", "Something wrong!");
                 response.sendRedirect(url);
             }
         } catch (Exception e) {

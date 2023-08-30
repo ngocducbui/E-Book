@@ -22,6 +22,10 @@
         <title>EBook: Sell Old Book</title>
     </head>
     <body style="background-color: #f0f1f2">
+        <c:if test="${empty userObj}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
+
         <%@include file= "navbar.jsp"%>
 
         <div class="container">
@@ -31,7 +35,8 @@
                         <div class="card-body">
                             <h4 class="text-center text-primary">Sell Old Book</h4>
 
-                            <form action="/EBook/AddBook" method="post" enctype="multipart/form-data" class="mt-4">
+                            <form action="/EBook/AddBookOld" method="post" enctype="multipart/form-data" class="mt-4">
+                                <input type="hidden" value="${userObj.email}" name="user">
                                 <div class="form-group mb-3" >
                                     <label for="exampleInputName" class="form-label">Book Name<span class="red-star">*</span></label>
                                     <input name="bookname" type="text" class="form-control" id="exampleInputName" aria-describedby="">
@@ -46,26 +51,6 @@
                                     <label for="exampleInputPrice" class="form-label">Price<span class="red-star">*</span></label>
                                     <input name="price" type="number" class="form-control" id="exampleInputPrice" aria-describedby="">
                                 </div>
-
-<!--                                <div class="form-group mb-3">
-                                    <label for="inputState" class="form-label">Book Categories<span class="red-star">*</span></label>
-                                    <select name="btype" class="form-control form-select" id="inputState">
-                                        <option selected>--select--</option>
-                                        <option value="New">New Book</option>
-                                        <option value="Old">Old Book</option>
-                                    </select>
-                                </div>-->
-
-
-<!--                                <div class="form-group mb-3">
-                                    <label for="inputStatus" class="form-label">Book Status<span class="red-star">*</span></label>
-                                    <select name="bstatus" class="form-control form-select" id="inputStatus">
-                                        <option selected>--select--</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
-                                    </select>
-                                </div>-->
-
                                 <div class="form-group mb-3">
                                     <label for="exampleInputImg" class="form-label">Upload Photo</label>
                                     <input name="img" type="file" class="form-control-file" id="exampleInputImg">
